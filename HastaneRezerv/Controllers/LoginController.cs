@@ -10,9 +10,9 @@ namespace HastaneRezerv.Controllers
         public IActionResult LoginOlustur()
         {
 
-            return RedirectToAction("Hastane");
+            return RedirectToAction("DoktorSec");
         }
-        public IActionResult Hastane()
+        public IActionResult DoktorSec()
         {
             // Hastane sayfasının işlemleri
             return View();
