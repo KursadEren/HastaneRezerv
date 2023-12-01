@@ -10,6 +10,11 @@ namespace HastaneRezerv.Controllers
         public IActionResult LoginOlustur()
         {
 
+            return RedirectToAction("AdminPanel");
+        }
+        public IActionResult LoginAdmin()
+        {
+
             return RedirectToAction("DoktorSec");
         }
         public IActionResult DoktorSec()
@@ -17,7 +22,21 @@ namespace HastaneRezerv.Controllers
             // Hastane sayfasının işlemleri
             return View();
         }
+        public IActionResult AdminPanel()
+        {
+            // Hastane sayfasının işlemleri
+            return View();
+        }
+        public IActionResult Hastane()
+        {
+            // Hastane sayfasının işlemleri
+            return View();
+        }
 
+        public IActionResult SaatSec()
+        {
+            return RedirectToAction("Hastane");
+        }
         public IActionResult Login()
         {
             return View();
