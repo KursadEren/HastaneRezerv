@@ -1,6 +1,6 @@
 ﻿namespace HastaneRezerv.Models
 {
-    public class Poliklinikcs
+    public class Randevu
     {
     }
 }
