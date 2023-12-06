@@ -11,6 +11,8 @@ namespace HastaneRezerv.Models
         public DbSet<Kullanici> Kullanici { get; set; }
 
 
+
+
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
