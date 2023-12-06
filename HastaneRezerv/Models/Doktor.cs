@@ -8,5 +8,7 @@
         public int AnaBilimDaliId { get; set; }
         public int PoliklinikId { get; set; }
 
+
+
     }
 }

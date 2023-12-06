@@ -44,7 +44,7 @@ namespace HastaneRezerv.Migrations
 
                     b.HasKey("DoktorId");
 
-                    b.ToTable("Doktor");
+                    b.ToTable("Doktor", (string)null);
                 });
 
             modelBuilder.Entity("HastaneRezerv.Models.Hastane", b =>
@@ -61,7 +61,7 @@ namespace HastaneRezerv.Migrations
 
                     b.HasKey("HastaneId");
 
-                    b.ToTable("Hastane");
+                    b.ToTable("Hastane", (string)null);
                 });
 
             modelBuilder.Entity("HastaneRezerv.Models.Kullanici", b =>
@@ -81,7 +81,7 @@ namespace HastaneRezerv.Migrations
 
                     b.HasKey("KullaniciId");
 
-                    b.ToTable("Kullanici");
+                    b.ToTable("Kullanici", (string)null);
                 });
 
             modelBuilder.Entity("HastaneRezerv.Models.Poliklinik", b =>
@@ -101,7 +101,7 @@ namespace HastaneRezerv.Migrations
 
                     b.HasKey("PoliklinikId");
 
-                    b.ToTable("Poliklinik");
+                    b.ToTable("Poliklinik", (string)null);
                 });
 
             modelBuilder.Entity("HastaneRezerv.Models.Unvan", b =>
@@ -118,7 +118,7 @@ namespace HastaneRezerv.Migrations
 
                     b.HasKey("UnvanId");
 
-                    b.ToTable("Unvan");
+                    b.ToTable("Unvan", (string)null);
                 });
 #pragma warning restore 612, 618
         }
