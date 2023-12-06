@@ -7,6 +7,6 @@
         public string  AdSoyad { get; set; }
         public int   TcNo { get;set; }
         public int UnvanId { get; set; }
-
+        public Unvan Unvan { get; set; }
     }
 }
