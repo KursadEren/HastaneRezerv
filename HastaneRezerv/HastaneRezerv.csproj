@@ -18,4 +18,8 @@
     <Folder Include="migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\image\sakarya-hastanesi-5dbfd4ca9d440.jpg" />
+  </ItemGroup>
+
 </Project>

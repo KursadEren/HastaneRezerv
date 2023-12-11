@@ -14,10 +14,19 @@
       padding: 8px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       background-color: #fff;
-      
       max-width: 300px;
-    }
+      display: flex;
 
+      justify-content: center;
+      align-items: center;
+      height:200px;
+    }
+   
+    .button{
+        border:none;
+        background-color:white;
+    }
+   
     .card h2 {
       color: #333;
     }
@@ -38,38 +47,36 @@
   <div class="container text-center mt-5">
     <!-- Stack the columns on mobile by making one full-width and the other half-width -->
     <div class="row">
-      <div class="col-md-8 mb-5"> 
+      <div class="col-md-8 mb-5 " > 
         <img class="images mt-5" src="image/sakarya-hastanesi-5dbfd4ca9d440.jpg" alt="Sakarya Hastanesi">
       </div>
-      <div class="col-md-4 mt-5">
-        <div class="row">
+      <div class="col-md-4 mt-5 d-flex ">
+        <div class="row d-flex flex-row">
+          
           <div class="col-md-12 mb-1">
-            <div class="card">
+              <button  class="button" type="button">
+            <div class="card d-flex">
               <h4>ONLİNE RANDEVU</h4>
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-calendar2-date-fill" viewBox="0 0 16 16">
-  <path d="M9.402 10.246c.625 0 1.184-.484 1.184-1.18 0-.832-.527-1.23-1.16-1.23-.586 0-1.168.387-1.168 1.21 0 .817.543 1.2 1.144 1.2z"/>
-  <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5m9.954 3H2.545c-.3 0-.545.224-.545.5v1c0 .276.244.5.545.5h10.91c.3 0 .545-.224.545-.5v-1c0-.276-.244-.5-.546-.5m-4.118 9.79c1.258 0 2-1.067 2-2.872 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684c.047.64.594 1.406 1.703 1.406zm-2.89-5.435h-.633A12.6 12.6 0 0 0 4.5 8.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675V7.354z"/>
-</svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-calendar-plus" viewBox="0 0 16 16">
+                  <path d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7"/>
+                  <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+                </svg>
             </div>
+            </button>
           </div>
+          
           <div class="col-md-12 mb-1">
-            <div class="card">
-              <h2>Başlık 2</h2>
-              <p>Kartın içeriği buraya gelir. Bu metin kartın içeriğini temsil eder.</p>
+              <button  class="button" type="button">
+            <div class="card d-flex">
+              <h4>DOKTORLARIMIZ</h4>
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
+              <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
+            </svg>
             </div>
+            </button>
           </div>
-           <div class="col-md-12 mb-1">
-            <div class="card">
-              <h2>Başlık 1</h2>
-              <p>Kartın içeriği buraya gelir. Bu metin kartın içeriğini temsil eder.</p>
-            </div>
-          </div>
-          <div class="col-md-12 mb-1">
-            <div class="card">
-              <h2>Başlık 2</h2>
-              <p>Kartın içeriği buraya gelir. Bu metin kartın içeriğini temsil eder.</p>
-            </div>
-          </div>
+           
+         
         </div>
       </div>
 
