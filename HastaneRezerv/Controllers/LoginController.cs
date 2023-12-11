@@ -24,7 +24,7 @@ namespace HastaneRezerv.Controllers
         }
         public IActionResult AdminPanel()
         {
-            // Hastane sayfasının işlemleri
+            
             return View();
         }
         public IActionResult Hastane()
