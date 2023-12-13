@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model Kullanici
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -82,12 +84,12 @@
         <h2>Giriş Yap</h2>
         <form method="post" asp-controller="Login" asp-action="AdminPanel">
             <div class="form-group">
-                <label for="username">Kullanıcı Adı:</label>
-                <input type="text" id="username" name="username" required>
+                <label asp-for="AdSoyad">Kullanıcı Adı:</label>
+                <input asp-for="AdSoyad" type="text"  required>
             </div>
             <div class="form-group">
-                <label for="password">Şifre:</label>
-                <input type="password" id="password" name="password" required>
+                <label asp-for="Sifre">Şifre:</label>
+                <input asp-for="Sifre" type="password"  required>
             </div>
             <div class="form-group">
                 <button type="submit">Giriş Yap</button>
