@@ -23,6 +23,11 @@ namespace HastaneRezerv.Controllers
 
             return RedirectToAction("DoktorSec");
         }
+        public IActionResult SignIn()
+        {
+
+            return View();
+        }
         public IActionResult DoktorSec()
         {
             // Hastane sayfasının işlemleri
