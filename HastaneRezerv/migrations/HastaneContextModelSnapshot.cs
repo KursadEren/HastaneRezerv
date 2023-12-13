@@ -105,10 +105,17 @@ namespace HastaneRezerv.Migrations
 
             modelBuilder.Entity("HastaneRezerv.Models.Kullanici", b =>
                 {
-                    b.Property<string>("KullaniciId")
+                    b.Property<int>("KullaniciId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("KullaniciId"), 1L, 1);
+
                     b.Property<string>("AdSoyad")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sifre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

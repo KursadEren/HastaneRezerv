@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HastaneRezerv.Migrations
 {
     [DbContext(typeof(HastaneContext))]
-    [Migration("20231206073524_InitialCreated2")]
-    partial class InitialCreated2
+    [Migration("20231213011143_InitaCrate")]
+    partial class InitaCrate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,40 @@ namespace HastaneRezerv.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("HastaneRezerv.Models.Aktiflik", b =>
+                {
+                    b.Property<int>("AktiflikId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AktiflikId"), 1L, 1);
+
+                    b.Property<string>("Durum")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AktiflikId");
+
+                    b.ToTable("Aktiflik");
+                });
+
+            modelBuilder.Entity("HastaneRezerv.Models.AnaBilimDali", b =>
+                {
+                    b.Property<int>("AnaBilimDaliId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AnaBilimDaliId"), 1L, 1);
+
+                    b.Property<string>("AnaBilimDaliAdi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AnaBilimDaliId");
+
+                    b.ToTable("AnaBilimDali");
+                });
 
             modelBuilder.Entity("HastaneRezerv.Models.Doktor", b =>
                 {
@@ -47,6 +81,10 @@ namespace HastaneRezerv.Migrations
 
                     b.HasKey("DoktorId");
 
+                    b.HasIndex("AnaBilimDaliId");
+
+                    b.HasIndex("PoliklinikId");
+
                     b.ToTable("Doktor");
                 });
 
@@ -69,10 +107,17 @@ namespace HastaneRezerv.Migrations
 
             modelBuilder.Entity("HastaneRezerv.Models.Kullanici", b =>
                 {
-                    b.Property<string>("KullaniciId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("KullaniciId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("KullaniciId"), 1L, 1);
 
                     b.Property<string>("AdSoyad")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sifre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -83,6 +128,8 @@ namespace HastaneRezerv.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("KullaniciId");
+
+                    b.HasIndex("UnvanId");
 
                     b.ToTable("Kullanici");
                 });
@@ -103,6 +150,8 @@ namespace HastaneRezerv.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PoliklinikId");
+
+                    b.HasIndex("HastaneId");
 
                     b.ToTable("Poliklinik");
                 });
@@ -144,6 +193,67 @@ namespace HastaneRezerv.Migrations
                     b.HasKey("UnvanId");
 
                     b.ToTable("Unvan");
+                });
+
+            modelBuilder.Entity("HastaneRezerv.Models.Doktor", b =>
+                {
+                    b.HasOne("HastaneRezerv.Models.AnaBilimDali", "AnaBilimDali")
+                        .WithMany("Doktor")
+                        .HasForeignKey("AnaBilimDaliId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HastaneRezerv.Models.Poliklinik", "Poliklinik")
+                        .WithMany("Doktor")
+                        .HasForeignKey("PoliklinikId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AnaBilimDali");
+
+                    b.Navigation("Poliklinik");
+                });
+
+            modelBuilder.Entity("HastaneRezerv.Models.Kullanici", b =>
+                {
+                    b.HasOne("HastaneRezerv.Models.Unvan", "Unvan")
+                        .WithMany("Kullanici")
+                        .HasForeignKey("UnvanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Unvan");
+                });
+
+            modelBuilder.Entity("HastaneRezerv.Models.Poliklinik", b =>
+                {
+                    b.HasOne("HastaneRezerv.Models.Hastane", "Hastane")
+                        .WithMany("Poliklinik")
+                        .HasForeignKey("HastaneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Hastane");
+                });
+
+            modelBuilder.Entity("HastaneRezerv.Models.AnaBilimDali", b =>
+                {
+                    b.Navigation("Doktor");
+                });
+
+            modelBuilder.Entity("HastaneRezerv.Models.Hastane", b =>
+                {
+                    b.Navigation("Poliklinik");
+                });
+
+            modelBuilder.Entity("HastaneRezerv.Models.Poliklinik", b =>
+                {
+                    b.Navigation("Doktor");
+                });
+
+            modelBuilder.Entity("HastaneRezerv.Models.Unvan", b =>
+                {
+                    b.Navigation("Kullanici");
                 });
 #pragma warning restore 612, 618
         }

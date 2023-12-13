@@ -34,13 +34,13 @@ namespace HastaneRezerv.Controllers
             string sifre = model.Sifre;
           
             var kullanici = (from Kullanici in _context.Kullanici
-                                   
+                                   where Kullanici.AdSoyad == kullaniciAdi && Kullanici.Sifre == sifre
                                    select Kullanici).FirstOrDefault();
 
 
 
 
-
+            
 
             if (kullanici != null)
             {
