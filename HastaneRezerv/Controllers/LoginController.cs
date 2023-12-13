@@ -48,6 +48,8 @@ namespace HastaneRezerv.Controllers
                 TempData["hata"] =  sifre+ " yazı";
                 
                 return View("AdminPanel");
+
+
             }
             else
             {
