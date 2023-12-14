@@ -29,9 +29,10 @@ namespace HastaneRezerv.Controllers
             // Hastane sayfasının işlemleri
             return View();
         }
-        public interface HomeController
+        public IActionResult SignIn()
         {
-            ActionResult Index();
+            // Hastane sayfasının işlemleri
+            return View("./Views/SignIn/SignIn.cshtml");
         }
 
         public IActionResult AdminPanel(Kullanici model)
