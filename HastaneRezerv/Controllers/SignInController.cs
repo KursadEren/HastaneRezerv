@@ -29,12 +29,21 @@ namespace HastaneRezerv.Controllers
             }
             if (model.Sifre == model.TekrarSifre)
             {
-                model.UnvanId = 1;
-                // Kullanıcıyı veritabanına ekle
-                _context.Kullanici.Add(model);
-                _context.SaveChanges();
-                TempData["hata"] = "Kayıt işlemi gerçekleştirildi";
-                return RedirectToAction("Login" , "Login");
+                if (model.TcNo.Length == 11)
+                {
+                    model.UnvanId = 1;
+                    // Kullanıcıyı veritabanına ekle
+                    _context.Kullanici.Add(model);
+                    _context.SaveChanges();
+                    TempData["hata"] = "Kayıt işlemi gerçekleştirildi";
+                    return RedirectToAction("Login", "Login");
+                }
+                else
+                    TempData["hata"] = "TC numarası 11 haneli olmalıdır";
+            }
+            else
+            {
+                TempData["hata"] = "Şifreler uyuşmuyor";
             }
             
            

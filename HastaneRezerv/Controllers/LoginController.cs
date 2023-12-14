@@ -3,7 +3,7 @@ using HastaneRezerv.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
-
+using Newtonsoft.Json;
 namespace HastaneRezerv.Controllers
 {
     public class LoginController : Controller
@@ -29,6 +29,10 @@ namespace HastaneRezerv.Controllers
             // Hastane sayfasının işlemleri
             return View();
         }
+        public interface HomeController
+        {
+            ActionResult Index();
+        }
 
         public IActionResult AdminPanel(Kullanici model)
         {
@@ -40,16 +44,12 @@ namespace HastaneRezerv.Controllers
                                    select Kullanici).FirstOrDefault();
 
 
-
-
-            
-
             if (kullanici != null)
             {
                 // Giriş başarılı, istediğiniz işlemleri yapabilirsiniz
                 TempData["hata"] =  sifre+ " yazı";
-                
-                return View("AdminPanel");
+                SetSessinObject(kullanici);
+                return View("./Views/Home/Index.cshtml");
 
 
             }
@@ -65,7 +65,17 @@ namespace HastaneRezerv.Controllers
             // Hastane sayfasının işlemleri
             return View();
         }
+        public IActionResult SetSessinObject(Kullanici model)
+        {
+            SessionKullanici usr = new SessionKullanici();
+            usr.AdSoyad = model.AdSoyad;
+            usr.UnvanId = model.UnvanId;
+            
+            string u = JsonConvert.SerializeObject(usr);
+            HttpContext.Session.SetString("SessionUsrObject", u);
 
+            return View();
+        }
         public IActionResult SaatSec()
         {
             return RedirectToAction("Hastane");
