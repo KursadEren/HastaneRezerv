@@ -23,16 +23,13 @@ namespace HastaneRezerv.Controllers
 
             return RedirectToAction("DoktorSec");
         }
-        public IActionResult SignIn()
-        {
-
-            return View();
-        }
+        
         public IActionResult DoktorSec()
         {
             // Hastane sayfasının işlemleri
             return View();
         }
+
         public IActionResult AdminPanel(Kullanici model)
         {
             string kullaniciAdi = model.AdSoyad;

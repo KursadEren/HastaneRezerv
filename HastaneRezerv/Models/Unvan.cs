@@ -4,6 +4,6 @@
     {
         public int UnvanId { get; set; }
         public string UnvanAdi { get; set; }
-        public ICollection<Kullanici>? Kullanici { get; set; }
+        public ICollection<Kullanici> ?Kullanici { get; set; }
     }
 }
