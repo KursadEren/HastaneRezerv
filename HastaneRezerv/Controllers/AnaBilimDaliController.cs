@@ -13,5 +13,9 @@ namespace HastaneRezerv.Controllers
 
 
         }
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }

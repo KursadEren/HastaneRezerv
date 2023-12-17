@@ -46,4 +46,12 @@
     </div>
 
 </body>
+<script>
+    // Tarayıcı geri tuşu engelleme
+    window.onpageshow = function(event) {
+        if (event.persisted) {
+            window.location.reload(); // Sayfayı yenile
+        }
+    };
+</script>
 </html>

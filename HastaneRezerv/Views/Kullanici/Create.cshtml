@@ -1,0 +1,58 @@
+﻿@model HastaneRezerv.Models.Kullanici
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<h1>View</h1>
+
+<h4>Kullanici</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="View">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="KullaniciId" class="control-label"></label>
+                <input asp-for="KullaniciId" class="form-control" />
+                <span asp-validation-for="KullaniciId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AdSoyad" class="control-label"></label>
+                <input asp-for="AdSoyad" class="form-control" />
+                <span asp-validation-for="AdSoyad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TcNo" class="control-label"></label>
+                <input asp-for="TcNo" class="form-control" />
+                <span asp-validation-for="TcNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UnvanId" class="control-label"></label>
+                <input asp-for="UnvanId" class="form-control" />
+                <span asp-validation-for="UnvanId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sifre" class="control-label"></label>
+                <input asp-for="Sifre" class="form-control" />
+                <span asp-validation-for="Sifre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TekrarSifre" class="control-label"></label>
+                <input asp-for="TekrarSifre" class="form-control" />
+                <span asp-validation-for="TekrarSifre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
