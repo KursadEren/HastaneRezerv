@@ -1,0 +1,41 @@
+﻿@model IEnumerable<HastaneRezerv.Models.Hastane>
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<h1>View</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.HastaneId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HastaneAdi)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.HastaneId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HastaneAdi)
+            </td>
+                 <td>
+                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.HastaneId">Düzenle</a> |
+                    <a class="btn btn-info " asp-action="Details" asp-route-id="@item.HastaneId">Detaylar</a> |
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.HastaneId">Sil</a>
+                    </td>
+        </tr>
+}
+    </tbody>
+</table>

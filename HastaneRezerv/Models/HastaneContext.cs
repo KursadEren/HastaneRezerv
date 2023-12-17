@@ -14,11 +14,15 @@ namespace HastaneRezerv.Models
         public DbSet<Randevu> Randevu { get; set; }
         public DbSet<AnaBilimDali> AnaBilimDali { get; set; }
         public DbSet<Aktiflik> Aktiflik { get; set; }
+        
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-H15996F\SQLEXPRESS;Database=Hastanedb;Trusted_Connection=True;");
+
+            optionsBuilder.UseSqlServer(@"Server=Kursad;Database=Hastanedb;Trusted_Connection=True;");
+
+
         }
     }
 }

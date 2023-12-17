@@ -1,0 +1,61 @@
+﻿@model IEnumerable<HastaneRezerv.Models.Doktor>
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<h1>View</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DoktorId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AdSoyad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TcNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AnaBilimDaliId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PoliklinikId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DoktorId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AdSoyad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TcNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AnaBilimDaliId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PoliklinikId)
+            </td>
+            <td>
+                <td>
+                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.DoktorId">Düzenle</a> |
+                    <a class="btn btn-info " asp-action="Details" asp-route-id="@item.DoktorId">Detaylar</a> |
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.DoktorId">Sil</a>
+                </td>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

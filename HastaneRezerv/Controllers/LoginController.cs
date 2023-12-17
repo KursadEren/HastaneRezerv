@@ -29,6 +29,15 @@ namespace HastaneRezerv.Controllers
             // Hastane sayfasının işlemleri
             return View();
         }
+        
+        
+        
+        
+        
+        
+        
+        
+        
         public IActionResult SignIn()
         {
             // Hastane sayfasının işlemleri
@@ -39,24 +48,26 @@ namespace HastaneRezerv.Controllers
         {
             string kullaniciAdi = model.AdSoyad;
             string sifre = model.Sifre;
-          
-            var kullanici = (from Kullanici in _context.Kullanici
-                                   where Kullanici.AdSoyad == kullaniciAdi && Kullanici.Sifre == sifre
-                                   select Kullanici).FirstOrDefault();
 
+            var kullanici = (from Kullanici in _context.Kullanici
+                             where Kullanici.AdSoyad == kullaniciAdi && Kullanici.Sifre == sifre
+                             select Kullanici).FirstOrDefault();
 
             if (kullanici != null)
             {
-                // Giriş başarılı, istediğiniz işlemleri yapabilirsiniz
-                TempData["hata"] =  sifre+ " yazı";
-                SetSessinObject(kullanici);
+                SetUserSession(model.AdSoyad);
+
+                if (kullanici.UnvanId == 2)
+                {
+                    SetUserRoleCookie("2");
+                    return View("./Views/Login/AdminPanel.cshtml");
+                }
+
+                SetUserRoleCookie("1");
                 return View("./Views/Home/Index.cshtml");
-
-
             }
             else
             {
-                // Hatalı giriş durumunda kullanıcıyı aynı sayfaya yönlendir
                 TempData["hata"] = "LoginAdmin'e girmediniz2!";
                 return View("Login");
             }
@@ -66,17 +77,7 @@ namespace HastaneRezerv.Controllers
             // Hastane sayfasının işlemleri
             return View();
         }
-        public IActionResult SetSessinObject(Kullanici model)
-        {
-            SessionKullanici usr = new SessionKullanici();
-            usr.AdSoyad = model.AdSoyad;
-            usr.UnvanId = model.UnvanId;
-            
-            string u = JsonConvert.SerializeObject(usr);
-            HttpContext.Session.SetString("SessionUsrObject", u);
-
-            return View();
-        }
+        
         public IActionResult SaatSec()
         {
             return RedirectToAction("Hastane");
@@ -85,9 +86,23 @@ namespace HastaneRezerv.Controllers
         {
             return View();
         }
+        private void SetUserRoleCookie(string role)
+        {
+            var cokOpt = new CookieOptions
+            {
+                Expires = DateTime.Now.AddMinutes(10)
+            };
 
-       
-        
+            HttpContext.Response.Cookies.Append("UserRole", role, cokOpt);
+            
+        }
+
+        private void SetUserSession(string username)
+        {
+            HttpContext.Session.SetString("SessionUsrObject", username);
+        }
+
+
 
         private string SifreHashle(string sifre)
         {

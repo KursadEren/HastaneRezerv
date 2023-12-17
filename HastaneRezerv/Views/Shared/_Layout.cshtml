@@ -33,22 +33,29 @@
                 font-weight: bold;
                 text-transform: uppercase;
             }
-            .nav-item {
-                list-style-type:none;
-            }
+
+        .nav-item {
+            list-style-type: none;
+        }
+
             .nav-item a {
-                color:red;
+                color: red;
             }
 
     </style>
-    
 
-        @{
-        if (Context.Session.GetString("SessionUsrObject") != null)
-            {
+    @{
+        var userRole = Context.Request.Cookies["UserRole"];
+        var Kullanici= Context.Session.GetString("SessionUsrObject");
+        if (Kullanici != null && userRole == "1")
+        {
             <header>
                 <div class="navbar">
-             <li class="nav-item border border-light">
+             
+                        <li class="nav-item border border-light">
+                <a class="nav-link text-light " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item border border-light">
                 <a class="nav-link text-light " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
             <li class="nav-item border border-light">
@@ -65,12 +72,42 @@
             @RenderBody()
         </main>
     </div>
-
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2023 - HastaneRezerv - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
+    </footer>
+        }
+        else if (Kullanici != null && userRole == "2")
+        {
+            <header>
+                <div class="navbar">
+                <li class="nav-item border border-light">
+                <a class="nav-link text-light " asp-area="" asp-controller="Kullanici" asp-action="Index">Kullanici</a>
+                        </li
+                    <li class="nav-item border border-light">
+                        <a class="nav-link text-light " asp-area="" asp-controller="Doktor" asp-action="Index">Doktor</a>
+                    </li>
+                    <li class="nav-item border border-light">
+                        <a class="nav-link text-light" asp-area="" asp-controller="Login" asp-action="Login">Giriş</a>
+                    </li>
+                    <li class="nav-item  border border-light">
+                        <a class="nav-link text-light " asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    </li>
+                    <!-- Diğer navbar öğeleri -->
+                </div>
+            </header>
+            <div class="container">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
+            <footer class="border-top footer text-muted">
+                <div class="container">
+                    &copy; 2023 - HastaneRezerv - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                </div>
             </footer>
+
         }
         else
         {
@@ -79,8 +116,11 @@
                     @RenderBody()
                 </main>
             </div>
+            <footer class="border-top footer text-muted">
+                <!-- ... (kodunuz) ... -->
+            </footer>
         }
-        }
+    }
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

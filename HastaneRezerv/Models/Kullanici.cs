@@ -11,5 +11,6 @@ namespace HastaneRezerv.Models
         public string Sifre { get; set; }
         public string TekrarSifre { get; set; }
         public Unvan Unvan { get; set; }
+        public ICollection<Randevu>? Randevu { get; set; }
     }
 }

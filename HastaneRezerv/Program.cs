@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 //Register services here
 
 //builder.Services.AddAuthentication(...)
-
+builder.Services.AddDistributedMemoryCache();
 //app.UseAuthentication();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -19,9 +19,6 @@ builder.Services.AddSession(options =>
 
 
 var app = builder.Build();
-
-
-
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
