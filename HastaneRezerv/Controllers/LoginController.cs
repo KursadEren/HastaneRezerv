@@ -13,11 +13,7 @@ namespace HastaneRezerv.Controllers
 
        
         [HttpPost]
-        public IActionResult LoginOlustur()
-        {
-
-            return RedirectToAction("AdminPanel");
-        }
+        
         public IActionResult LoginAdmin()
         {
 
@@ -29,22 +25,35 @@ namespace HastaneRezerv.Controllers
             // Hastane sayfasının işlemleri
             return View();
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
+        public async Task<IActionResult> LogOut()
+        {
+            // Hastane sayfasının işlemleri
+            await RemoveSessionAndCookie();
+            return RedirectToAction("Login");
+        }
+        private async Task RemoveSessionAndCookie()
+        {
+            if (HttpContext.Session.GetString("UserName") != null)
+            {
+                // Session varsa sil
+                HttpContext.Session.Remove("UserName");
+            }
+
+            if (HttpContext.Request.Cookies.ContainsKey("UserRole"))
+            {
+                // Cookie varsa sil
+                Response.Cookies.Delete("UserRole");
+            }
+        }
+
         public IActionResult SignIn()
         {
             // Hastane sayfasının işlemleri
             return View("./Views/SignIn/SignIn.cshtml");
         }
 
-        public IActionResult AdminPanel(Kullanici model)
+        public async Task<IActionResult> AdminPanel(Kullanici model)
         {
             string kullaniciAdi = model.AdSoyad;
             string sifre = model.Sifre;
@@ -102,7 +111,7 @@ namespace HastaneRezerv.Controllers
             HttpContext.Session.SetString("SessionUsrObject", username);
         }
 
-
+       
 
         private string SifreHashle(string sifre)
         {

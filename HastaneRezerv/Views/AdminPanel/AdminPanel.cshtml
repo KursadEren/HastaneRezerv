@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş Sayfası</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    @if (TempData["hata"] is not null)
+    {
+        <div class="alert alert-danger">@TempData["hata"]</div>
+    }
+    <div class=" table-bordered border-dark">
+    <h2>Products</h2>
+
+    <p>
+        <a asp-action="Create" class="btn btn-success">Create New</a>
+    </p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td>.</td>
+                    <td>.</td>
+                    <td>. </td>
+                    <td>
+                        <a class="btn btn-primary">Edit</a>
+                        <a class="btn btn-info    ">Details</a>
+                        <a class="btn btn-danger ">Delete</a>
+                    </td>
+                </tr>
+            
+        </tbody>
+    </table>
+    </div>
+</body>
+
+</html>

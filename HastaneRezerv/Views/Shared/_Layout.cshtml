@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/HastaneRezerv.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/HastaneRezerv.styles.css?v=1" asp-append-version="true" />
+
 </head>
 <body>
     <style>
@@ -64,6 +66,9 @@
             <li class="nav-item  border border-light">
                 <a class="nav-link text-light " asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li class="nav-item border border-light">
+                <a class="nav-link text-light " asp-area="" asp-controller="Login" asp-action="LogOut">Çıkış</a>
+                        </li>
             <!-- Diğer navbar öğeleri -->
         </div>
     </header>
@@ -103,6 +108,10 @@
                     <li class="nav-item border border-light">
                         <a class="nav-link text-light " asp-area="" asp-controller="Unvan" asp-action="Index">Unvan</a>
                     </li>
+                    <li class="nav-item border border-light">
+                        <a class="nav-link text-light " asp-area="" asp-controller="Login" asp-action="LogOut">Kullanici</a>
+                    </li>
+
                     <!-- Diğer navbar öğeleri -->
                 </div>
             </header>
@@ -134,5 +143,6 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>
