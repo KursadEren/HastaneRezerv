@@ -13,5 +13,12 @@ namespace HastaneRezerv.Controllers
 
             
         }
+        public IActionResult Doktorlarimiz()
+        {
+            var y = k.Doktor.ToList();
+            return View(y);
+
+
+        }
     }
 }
