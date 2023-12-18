@@ -5,7 +5,12 @@ namespace HastaneRezerv.Controllers
 {
     public class AnaBilimDaliController : Controller
     {
-        private HastaneContext k = new HastaneContext();
+        private readonly HastaneContext k;
+
+        public AnaBilimDaliController(HastaneContext context)
+        {
+            k = context;
+        }
         public IActionResult Index()
         {
             var y = k.AnaBilimDali.ToList();

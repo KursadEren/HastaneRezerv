@@ -5,13 +5,25 @@ namespace HastaneRezerv.Controllers
 {
     public class DoktorController : Controller
     {
-        private HastaneContext k = new HastaneContext();
+        private readonly HastaneContext k;
+
+        public DoktorController(HastaneContext context)
+        {
+            k = context;
+        }
         public IActionResult Index()
         {
             var y = k.Doktor.ToList();
             return View(y);
 
             
+        }
+        public IActionResult Create()
+        {
+            
+            return View();
+
+
         }
     }
 }

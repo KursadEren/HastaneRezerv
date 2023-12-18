@@ -8,10 +8,13 @@ namespace HastaneRezerv.Controllers
 {
     public class LoginController : Controller
     {
-        private  HastaneContext _context = new HastaneContext();
+        private readonly HastaneContext k;
 
+        public LoginController(HastaneContext context)
+        {
+            k = context;
+        }
 
-       
         [HttpPost]
         
         public IActionResult LoginAdmin()
@@ -58,7 +61,7 @@ namespace HastaneRezerv.Controllers
             string kullaniciAdi = model.AdSoyad;
             string sifre = model.Sifre;
 
-            var kullanici = (from Kullanici in _context.Kullanici
+            var kullanici = (from Kullanici in k.Kullanici
                              where Kullanici.AdSoyad == kullaniciAdi && Kullanici.Sifre == sifre
                              select Kullanici).FirstOrDefault();
 

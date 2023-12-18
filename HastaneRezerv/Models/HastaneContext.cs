@@ -4,7 +4,9 @@ namespace HastaneRezerv.Models
 {
     public class HastaneContext : DbContext
     {
-        
+        public HastaneContext(DbContextOptions<HastaneContext> options) : base(options)
+        {
+        }
 
         public DbSet<Doktor> Doktor { get; set; }
         public DbSet<Hastane> Hastane { get; set; }
@@ -20,7 +22,7 @@ namespace HastaneRezerv.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
-            optionsBuilder.UseSqlServer(@"Server=Kursad;Database=Hastanedb;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(@"Server=Kursad;Database=Hastanedb;Trusted_Connection=True;MultipleActiveResultSets=true;");
 
 
         }

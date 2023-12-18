@@ -5,7 +5,13 @@ namespace HastaneRezerv.Controllers
 {
     public class KullaniciController : Controller
     {
-        private HastaneContext k = new HastaneContext();
+
+        private readonly HastaneContext k;
+
+        public KullaniciController(HastaneContext context)
+        {
+            k = context;
+        }
         public IActionResult Index()
         {
             var y = k.Kullanici.ToList();

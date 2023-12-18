@@ -5,10 +5,12 @@ namespace HastaneRezerv.Controllers
 {
     public class SignInController : Controller
     {
-        private  HastaneContext _context = new HastaneContext();
+        private readonly HastaneContext k;
 
-       
-
+        public SignInController(HastaneContext context)
+        {
+            k = context;
+        }
         public IActionResult Index()
         {
             return View();
@@ -22,7 +24,7 @@ namespace HastaneRezerv.Controllers
         [HttpPost]
         public IActionResult SignIn(Kullanici model)
         {
-            if (_context.Kullanici.Any(u => u.TcNo == model.TcNo && u.AdSoyad == model.AdSoyad))
+            if (k.Kullanici.Any(u => u.TcNo == model.TcNo && u.AdSoyad == model.AdSoyad))
             {
                 TempData["hata"] = "Bu TcNo ve AdSoyad ile kayıtlı bir kullanıcı zaten var";
                 return View();
@@ -33,8 +35,8 @@ namespace HastaneRezerv.Controllers
                 {
                     model.UnvanId = 1;
                     // Kullanıcıyı veritabanına ekle
-                    _context.Kullanici.Add(model);
-                    _context.SaveChanges();
+                    k.Kullanici.Add(model);
+                    k.SaveChanges();
                     TempData["hata"] = "Kayıt işlemi gerçekleştirildi";
                     return RedirectToAction("Login", "Login");
                 }
