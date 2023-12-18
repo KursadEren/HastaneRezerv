@@ -1,0 +1,50 @@
+﻿@model IEnumerable<HastaneRezerv.Models.Doktor>
+
+@{
+    ViewData["Title"] = "View";
+}
+<script> 
+    .card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            max-width: 300px;
+            margin: 0 auto; /* Bu satırı ekleyerek card'ı ortala */
+            text-align: center; /* İçerikleri ortala */
+            height: 200px;
+        }
+
+     .button {
+            border: none;
+            background-color: white;
+            cursor: pointer; /* İsteğe bağlı olarak ekleyebilirsiniz */
+        }
+</script>
+
+<h1>View</h1>
+
+
+
+<div>
+    @foreach (var item in Model) {
+        
+        <div class="card button">
+
+            
+                @Html.DisplayFor(modelItem => item.DoktorId)
+            
+                @Html.DisplayFor(modelItem => item.AdSoyad)
+            
+                @Html.DisplayFor(modelItem => item.TcNo)
+            
+                @Html.DisplayFor(modelItem => item.AnaBilimDaliId)
+            
+                @Html.DisplayFor(modelItem => item.PoliklinikId)
+            
+       </div>  
+       
+}
+</div>  
+

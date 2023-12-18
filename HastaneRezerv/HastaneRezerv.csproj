@@ -15,6 +15,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\image\indir.jpeg" />
     <None Include="wwwroot\image\sakarya-hastanesi-5dbfd4ca9d440.jpg" />
   </ItemGroup>
 
