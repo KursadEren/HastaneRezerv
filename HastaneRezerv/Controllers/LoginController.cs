@@ -61,8 +61,13 @@ namespace HastaneRezerv.Controllers
             string kullaniciAdi = model.AdSoyad;
             string sifre = model.Sifre;
 
+            // Aktif durumu sabitini tanımlayın
+            const string AktifDurumu = "Aktif";
+
             var kullanici = (from Kullanici in k.Kullanici
-                             where Kullanici.AdSoyad == kullaniciAdi && Kullanici.Sifre == sifre
+                             join aktiflik in k.Aktiflik on Kullanici.AktiflikId equals aktiflik.AktiflikId
+                             where Kullanici.AdSoyad == kullaniciAdi && Kullanici.Sifre == sifre &&
+                                   aktiflik.Durum == AktifDurumu
                              select Kullanici).FirstOrDefault();
 
             if (kullanici != null)
@@ -80,11 +85,13 @@ namespace HastaneRezerv.Controllers
             }
             else
             {
-                TempData["hata"] = "LoginAdmin'e girmediniz2!";
+                TempData["hata"] = "LoginAdmin'e girmediniz!";
                 return View("Login");
             }
         }
-        public IActionResult Hastane()
+
+    
+    public IActionResult Hastane()
         {
             // Hastane sayfasının işlemleri
             return View();
