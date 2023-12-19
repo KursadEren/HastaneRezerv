@@ -10,7 +10,9 @@ namespace HastaneRezerv.Models
         public int UnvanId { get; set; }
         public string Sifre { get; set; }
         public string TekrarSifre { get; set; }
+        public int AktiflikId { get; set; }
         public Unvan Unvan { get; set; }
         public ICollection<Randevu>? Randevu { get; set; }
+        public Aktiflik Aktiflik { get; set; }
     }
 }

@@ -22,5 +22,17 @@ namespace HastaneRezerv.Controllers
         {
             return View();
         }
+        public IActionResult Delete()
+        {
+            return View();
+        }
+        public IActionResult Detail()
+        {
+            return View();
+        }
+        public IActionResult Edit()
+        {
+            return View();
+        }
     }
 }

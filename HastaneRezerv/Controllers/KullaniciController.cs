@@ -19,8 +19,44 @@ namespace HastaneRezerv.Controllers
             return View(y);
             
         }
+        [HttpPost]
+        public IActionResult Create(Kullanici Model)
+        {
+             
+            if (!ModelState.IsValid)
+            {
+                k.Kullanici.Add(Model);
+                //k.Add(y);
+                k.SaveChanges();
+                TempData["msj"] = Model.AdSoyad + " adlı yazar eklendi";
+                return RedirectToAction("Index");
+            }
+            TempData["msj"] = "Ekleme başarısız";
+
+            return View(Model);
+
+        }
         public IActionResult Create()
         {
+            return View();
+        }
+       
+        public IActionResult Detail()
+        {
+            return View();
+        }
+        public IActionResult Edit()
+        {
+            return View();
+        }
+        public IActionResult Delete(int? id)
+        {
+
+            if(id == null)
+            {
+
+                return View();
+            }
 
             return View();
 
