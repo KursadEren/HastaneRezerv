@@ -22,6 +22,11 @@
                 <input asp-for="AnaBilimDaliAdi" class="form-control" />
                 <span asp-validation-for="AnaBilimDaliAdi" class="text-danger"></span>
             </div>
+             <div class="form-group">
+                <label asp-for="AktiflikId" class="control-label"></label>
+                <select asp-for="AktiflikId" asp-items="ViewBag.AktiflikList" class="form-control"></select>
+                <span asp-validation-for="AktiflikId" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

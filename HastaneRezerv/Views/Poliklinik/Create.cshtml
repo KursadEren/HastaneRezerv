@@ -12,11 +12,7 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="PoliklinikId" class="control-label"></label>
-                <input asp-for="PoliklinikId" class="form-control" />
-                <span asp-validation-for="PoliklinikId" class="text-danger"></span>
-            </div>
+           
             <div class="form-group">
                 <label asp-for="PoliklinikAdi" class="control-label"></label>
                 <input asp-for="PoliklinikAdi" class="form-control" />
@@ -24,9 +20,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="HastaneId" class="control-label"></label>
-                <input asp-for="HastaneId" class="form-control" />
+                <select asp-for="HastaneId" asp-items="ViewBag.HastaneList" class="form-control"></select>
                 <span asp-validation-for="HastaneId" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
