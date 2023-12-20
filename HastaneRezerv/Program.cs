@@ -1,5 +1,10 @@
-﻿using HastaneRezerv.Models;
+﻿using System;
+using HastaneRezerv.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<HastaneContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("YourConnection")));
 
+builder.Services.AddHttpClient();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession(options =>

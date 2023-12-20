@@ -18,9 +18,9 @@ namespace HastaneRezerv.Controllers
             _context = context;
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Kullanici>>> GetKullanici()
+        public async Task<ActionResult<IEnumerable<Kullanici>>> GetDoktor()
         {
-            var kullanici = await _context.Kullanici.ToListAsync();
+            var kullanici = await _context.Doktor.ToListAsync();
             return Ok(kullanici);
         }
     }

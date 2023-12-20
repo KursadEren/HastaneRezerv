@@ -1,24 +1,51 @@
 ﻿using HastaneRezerv.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
+using Newtonsoft.Json;
+using System.Net.Http;
 namespace HastaneRezerv.Controllers
 {
     public class DoktorController : Controller
     {
         private readonly HastaneContext k;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public DoktorController(HastaneContext context)
+        
+        public DoktorController(HastaneContext context, IHttpClientFactory httpClientFactory)
         {
+            _httpClientFactory = httpClientFactory;
             k = context;
         }
         public IActionResult Index()
         {
             var y = k.Doktor.ToList();
             return View(y);
-
-            
+ 
         }
+
+        public async Task<IActionResult> Doktorlarimiz()
+        {
+            string apiUrl = "https://localhost:7266/api/Api";
+
+            using (var httpClient = _httpClientFactory.CreateClient())
+            {
+                HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseData = await response.Content.ReadAsStringAsync();
+                    var apiResponseModel = JsonConvert.DeserializeObject<List<Doktor>>(responseData);
+
+                    return View(apiResponseModel);
+                }
+                else
+                {
+                    var apiResponseModel = new List<Doktor>();
+                    return View(apiResponseModel);
+                }
+            }
+        }
+
         public IActionResult Create()
         {
 
