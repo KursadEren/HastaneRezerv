@@ -4,15 +4,23 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+
 namespace HastaneRezerv.Controllers
 {
     public class LoginController : Controller
     {
         private readonly HastaneContext k;
+        private readonly UserManager<RegisterModelcs> _userManager;
+        private readonly SignInManager<RegisterModelcs> _signInManager;
 
-        public LoginController(HastaneContext context)
+
+        public LoginController(HastaneContext context, UserManager<RegisterModelcs> userManager, SignInManager<RegisterModelcs> signInManager)
         {
             k = context;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         [HttpPost]
@@ -55,7 +63,12 @@ namespace HastaneRezerv.Controllers
             // Hastane sayfasının işlemleri
             return View("./Views/SignIn/SignIn.cshtml");
         }
-
+        [Authorize(Roles = "Admin")]
+        public IActionResult AdminPanel()
+        {
+            return View();
+        }
+        [HttpPost]
         public async Task<IActionResult> AdminPanel(Kullanici model)
         {
             string kullaniciAdi = model.AdSoyad;
@@ -72,26 +85,40 @@ namespace HastaneRezerv.Controllers
 
             if (kullanici != null)
             {
-                SetUserSession(model.AdSoyad);
+                var result = await _signInManager.PasswordSignInAsync(kullanici.AdSoyad, kullanici.Sifre, false, lockoutOnFailure: false);
 
-                if (kullanici.UnvanId == 2)
+
+                if (result.Succeeded)
                 {
-                    SetUserRoleCookie("2");
-                    return View("./Views/Login/AdminPanel.cshtml");
-                }
+                    var user = await _userManager.FindByNameAsync(kullanici.AdSoyad);
+                    var Roles = await _userManager.GetRolesAsync(user);
 
-                SetUserRoleCookie("1");
-                return View("./Views/Home/Index.cshtml");
-            }
-            else
-            {
-                TempData["hata"] = "LoginAdmin'e girmediniz!";
+                    // Giriş başarılıysa kullanıcı bilgilerini saklama
+                    SetUserSession(model.AdSoyad);
+
+                    if (kullanici.UnvanId == 2)
+                    {
+                        // Admin rolüne sahipse AdminPanel'e yönlendirme
+                        TempData["hata"] = "hata";
+                        SetUserRoleCookie("2");
+                        return View("./Views/Login/AdminPanel.cshtml");
+                    }
+
+                    // Diğer durumlar için ana sayfaya yönlendirme
+                    SetUserRoleCookie("1");
+                    return RedirectToAction("Index", "Home");
+                }
+                TempData["hata"] = "hata";
                 return View("Login");
             }
+
+            // Giriş başarısızsa veya yetkisi yoksa hata mesajı verme
+            TempData["hata"] = "Giriş başarısız veya yetkisiz giriş!";
+            return View("Login");
         }
 
-    
-    public IActionResult Hastane()
+
+        public IActionResult Hastane()
         {
             // Hastane sayfasının işlemleri
             return View();

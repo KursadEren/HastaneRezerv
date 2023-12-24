@@ -1,4 +1,5 @@
 ﻿using HastaneRezerv.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -13,16 +14,20 @@ namespace HastaneRezerv.Controllers
         {
             _logger = logger;
         }
+        [Authorize]
 
         public IActionResult Index()
         {
             return View();
         }
+        [Authorize]
 
         public IActionResult Privacy()
         {
             return View();
         }
+        [Authorize]
+
         public IActionResult OnlineRandevu()
         {
             return View();

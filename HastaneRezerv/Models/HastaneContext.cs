@@ -1,8 +1,10 @@
 ﻿
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 namespace HastaneRezerv.Models
 {
-    public class HastaneContext : DbContext
+    public class HastaneContext : IdentityDbContext<RegisterModelcs>
     {
         public HastaneContext(DbContextOptions<HastaneContext> options) : base(options)
         {
@@ -22,7 +24,8 @@ namespace HastaneRezerv.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
-            optionsBuilder.UseSqlServer(@"Server=Kursad;Database=Hastanedb;Trusted_Connection=True;MultipleActiveResultSets=true;");
+            optionsBuilder.UseSqlServer(@"Server=Kursad;Database=HastaneDataBase
+;Trusted_Connection=True;MultipleActiveResultSets=true;");
 
 
         }
