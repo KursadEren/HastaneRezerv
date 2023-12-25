@@ -105,7 +105,7 @@ namespace HastaneRezerv.Controllers
                     if (kullanici.UnvanId == 2)
                     {
                         // Admin rolüne sahipse AdminPanel'e yönlendirme
-                        TempData["hata"] = "hata";
+                       
                         SetUserRoleCookie("2");
                         return View("./Views/Login/AdminPanel.cshtml");
                     }

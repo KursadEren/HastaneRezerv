@@ -29,10 +29,7 @@ namespace HastaneRezerv.Controllers
         [Authorize]
 
        
-        public IActionResult Doktorlar()
-        {
-            return View();
-        }
+        
 
 
 

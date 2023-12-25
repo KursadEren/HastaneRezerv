@@ -24,7 +24,7 @@ namespace HastaneRezerv.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
-            optionsBuilder.UseSqlServer(@"Server=Kursad;Database=HastaneDataBase
+            optionsBuilder.UseSqlServer(@"Server=Kursad\SQLEXPRESS;Database=HastaneDataBase
 ;Trusted_Connection=True;MultipleActiveResultSets=true;");
 
 

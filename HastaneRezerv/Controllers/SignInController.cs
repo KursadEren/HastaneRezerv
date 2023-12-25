@@ -56,7 +56,7 @@ namespace HastaneRezerv.Controllers
 
                     model.UserName = model.Name;
                     var result = await _userManager.CreateAsync(model, model.sifre);
-                    await _userManager.AddToRoleAsync(model, "User");
+                    await _userManager.AddToRoleAsync(model, "Admin");
                     if (result.Succeeded)
                     {
                         if (!await _roleManager.RoleExistsAsync("Admin"))
@@ -70,10 +70,7 @@ namespace HastaneRezerv.Controllers
                             // "User" rolü henüz oluşturulmamışsa, oluşturalım.
                             await _roleManager.CreateAsync(new IdentityRole("User"));
                         }
-                        var user2 = await _userManager.FindByNameAsync("username");
-                     
-                        // Kullanıcıyı istediğiniz role atayabilirsiniz.
-                        await _userManager.AddToRoleAsync(user2, "User"); // veya "User"
+                       
                         // Kullanıcıyı veritabanına ekle
                         k.Kullanici.Add(user);
                         k.SaveChanges();

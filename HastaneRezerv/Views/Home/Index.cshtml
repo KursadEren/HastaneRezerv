@@ -21,23 +21,53 @@
 
         .button {
             border: none;
-            background-color: white;
-            cursor: pointer; /* İsteğe bağlı olarak ekleyebilirsiniz */
+           background-color: white;
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
+
         }
 
         .card h4 {
             color: #333;
+           
         }
+        .card:hover{
+            transform: scale(1.1); /* Büyüklüğü 1.1 katına çıkarabilirsiniz. */
+            background-color: #e0e0e0;
+        }
+        
+        .image{
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            width:80%;
+            height:400px;
+            margin: 0 auto; /* Bu satırı ekleyerek card'ı ortala */
+            text-align: center; /* İçerikleri ortala */
+           
+        }
+        .text{
+          font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+        }
+      
     </style>
 </head>
 <body>
 
     <div class="container text-center mt-5">
         <div class="row">
+            <div class="col-md-12 mb-1">
+               
+            <img class="image" src="~/image/7257168.jpeg"  />
             
-                <div class="row d-flex flex-row justify-content-center">
-                    <div class="col-md-6 mb-1">
-                        <button class="card button" onclick="location.href='@Url.Action("DoktorSec", "Randevu")'">
+           </div>
+           </div>
+           <div class="row mb-3 mt-3">
+                <div class="row d-flex flex-row">
+                    <div class="col-md-6 ">
+                        <button class="card button d-flex flex-column align-items-center justify-content-center " onclick="location.href='@Url.Action("DoktorSec", "Randevu")'">
                             <h4>ONLİNE RANDEVU</h4>
                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-calendar-plus" viewBox="0 0 16 16">
                   <path d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7"/>
@@ -47,8 +77,8 @@
                         </button>
                     </div>
 
-                    <div class="col-md-6 mb-1">
-                        <button class="card button" onclick="location.href='@Url.Action("Doktorlarimiz", "Home")'">
+                    <div class="col-md-6 ">
+                        <button class="card button d-flex flex-column align-items-center justify-content-center " onclick="location.href='@Url.Action("Doktorlarimiz", "Doktor")'">
                             <h4>DOKTORLARIMIZ</h4>
                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
               <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
@@ -57,8 +87,42 @@
                         </button>
                     </div>
                 </div>
-            
+             
+           
         </div>
+        <div class="row mb-3 mt-3">
+            
+            <div class="col-md-12 col-sm-12 border Text-Container">
+                <div class="mb-1 mt-1 p-2 " >
+                <p class="text"> » 120 Yatak Kapasitesi
+                » Koroner Yoğun Bakım Ünitesi
+                » KVC Yoğun Bakım Ünitesi<br>
+                » Yeni Doğan Yoğun Bakım Ünitesi
+                » Yetişkin Yoğun Bakım Ünitesi
+                » 3 Ameliyathane<br>
+                » 2 Doğumhane
+                » Tıbbi Biyokimya ve Mikrobiyoloji Laboratuvarları
+                » Doopler USG<br>
+                » Kemik Dansitometre
+                » 1.5 Tesla MR<br>
+                » 7/24 Ambulans Hizmeti
+                » Eczane Hizmeti
+                » Sosyal Alanlar<br>
+                » Kafeterya
+                » Patoloji Laboratuvarı
+                » Kan Merkezi<br>
+                » Yeni Doğan Yoğun Bakım Ünitesi
+                » Genel Yoğun Bakım Ünitesi
+                » Koroner Yoğun Bakım Ünitesi<br>
+                » KVC Yoğun Bakım Ünitesi
+                » Anjiografi Ünitesi
+                » Endoskopi Ünitesi<br>
+                » Röntgen
+                » ESWL<br>
+                » Hasta ve çalışan memnuniyeti odaklı hizmet anlayışı ve gelişmiş teknolojisiyle hasta ve çalışanlarına konforlu bir ortam sunmayı amaçlamıştır.</p>
+                </div>
+            </div>
+         </div>
     </div>
 
     <!-- Bootstrap JS ve Popper.js dosyaları (isteğe bağlı, modal vb. için gereklidir) -->
