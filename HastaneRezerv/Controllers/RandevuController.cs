@@ -20,8 +20,8 @@ namespace HastaneRezerv.Controllers
         
         public IActionResult DoktorSec2(Doktor Model)
         {
-           
-            
+
+            ViewBag.TarihSecenekleri = GetTarihSecenekleri();
             ViewBag.AdSoyadList = GetAdSoyad(Model);
             
             return View();
@@ -43,7 +43,7 @@ namespace HastaneRezerv.Controllers
                 var randevular = await _context.Randevu
                     .Where(r => r.DoktorId == model.DoktorId)
                     .ToListAsync();
-
+               
                 // Pass the result to the view
                 ViewBag.Randevular = randevular;
                 return View(randevular);
@@ -95,6 +95,27 @@ namespace HastaneRezerv.Controllers
             
             return doktorList;
         }
+        private List<SelectListItem> GetTarihSecenekleri()
+        {
+            var baslangicTarihi = DateTime.Now;
+            var bitisTarihi = baslangicTarihi.AddDays(7); // 1 hafta sonrası
+
+            var tarihler = new List<SelectListItem>();
+
+            while (baslangicTarihi <= bitisTarihi)
+            {
+                tarihler.Add(new SelectListItem
+                {
+                    Value = baslangicTarihi.ToString("yyyy-MM-dd"),
+                    Text = baslangicTarihi.ToString("dd/MM/yyyy")
+                });
+
+                baslangicTarihi = baslangicTarihi.AddDays(1);
+            }
+
+            return tarihler;
+        }
+
 
     }
 }
