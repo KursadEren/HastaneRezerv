@@ -17,9 +17,12 @@ namespace HastaneRezerv.Controllers
         {
             return View();
         }
-        public IActionResult DoktorSec2()
+        public IActionResult DoktorSec2(Doktor Model)
         {
-            ViewBag.AdSoyadList = GetAdSoyad();
+            TempData["hata"] = Model.AnaBilimDaliId + " " + Model.PoliklinikId;
+           
+            
+            ViewBag.AdSoyadList = GetAdSoyad(Model);
             return View();
         }
         public IActionResult DoktorSec()
@@ -66,14 +69,17 @@ namespace HastaneRezerv.Controllers
 
             return AnaBilimDali;
         }
-        private List<SelectListItem> GetAdSoyad()
+      
+       private List<SelectListItem> GetAdSoyad(Doktor model)
         {
-            // Veritabanından hastane verilerini çek
-            var Doktor = _context.Doktor
-                .Select(h => new SelectListItem { Value = h.DoktorId.ToString(), Text = h.AdSoyad })
+            // Veritabanından doktor verilerini çek, filtrele
+            var doktorList = _context.Doktor
+                .Where(d => d.PoliklinikId == model.PoliklinikId && d.AnaBilimDaliId == model.AnaBilimDaliId)
+                .Select(d => new SelectListItem { Value = d.DoktorId.ToString(), Text = d.AdSoyad })
                 .ToList();
 
-            return Doktor;
+            return doktorList;
         }
+
     }
 }

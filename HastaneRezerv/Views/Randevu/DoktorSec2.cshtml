@@ -9,14 +9,17 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body class="bg-dark">
-
+    @if (TempData["hata"] is not null)
+    {
+        <div class="alert alert-danger">@TempData["hata"]</div>
+    }
     <div class="container-fluid d-flex align-items-center justify-content-center " id="Container">
         <div class="content text-center d-flex align-items-center">
             <form class="form-form" method="post" asp-controller="Randevu" asp-action="OnlineRandevu">
                <div class="form-group mt-4 p-2  border border-light d">
                     
                      <label asp-for="AdSoyad" class="control-label"></label>
-                <select asp-for="AdSoyad" asp-items="ViewBag.AdSoyadList" class="form-control"></select>
+                    <select asp-for="AdSoyad" asp-items="ViewBag.AdSoyadList" class="form-control"></select>
                 <span asp-validation-for="AdSoyad" class="text-danger"></span>
             
                 </div>
