@@ -23,130 +23,114 @@
         .navbar {
             background-color: #333;
             color: #fff;
-           
             height:75px;
-            text-align: center;
         }
 
-            .navbar a {
-                color: #fff;
-                text-decoration: none;
-                
-                font-weight: bold;
-                text-transform: uppercase;
-            }
+            
 
         .nav-item {
             list-style-type: none;
         }
 
-            .nav-item a {
-                color: red;
-            }
+        .Continer2 {
+              background-color:#333;
+          }
 
     </style>
-
+    
     @{
         var userRole = Context.Request.Cookies["UserRole"];
-        var Kullanici= Context.Session.GetString("SessionUsrObject");
+        var Kullanici = Context.Session.GetString("SessionUsrObject");
         if (Kullanici != null && userRole == "1")
         {
-            <header>
-                <div class="navbar container">
-                <div class="row">
-             @if (true)
-                    {
-                        
-                    }<div class="col-md-2">
-                        <li class="nav-item border  border-light rounded">
-                <a class="nav-link text-light " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
+          
+                <div class="container Continer2">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <li class="nav-item border border-light rounded">
+                                <a class="nav-link text-light " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
                         </div>
                         <div class="col-md-2">
-                        <li class="nav-item border border-light rounded">
-                <a class="nav-link text-light " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
+                            <li class="nav-item border border-light rounded">
+                                <a class="nav-link text-light " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
                         </div>
-                         <div class="col-md-2">
-            <li class="nav-item border border-light rounded">
-                <a class="nav-link text-light" asp-area="" asp-controller="Login" asp-action="Login">Giriş</a>
-                        </li>
-                         </div>
-                          <div class="col-md-2">
-            <li class="nav-item  border border-light rounded">
-                <a class="nav-link text-light " asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        <div class="col-md-2">
+                            <li class="nav-item border border-light rounded">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Login" asp-action="Login">Giriş</a>
+                            </li>
                         </div>
-                         <div class="col-md-2">
-                        <li class="nav-item border border-light rounded">
-                <a class="nav-link text-light " asp-area="" asp-controller="Login" asp-action="LogOut">Çıkış</a>
-                        </li>
-                          </div>
-            <!-- Diğer navbar öğeleri -->
-            </div>
-        </div>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-    
-        }
-        else if (Kullanici != null && userRole == "2")
-        {
-            <header>
-                <div class="navbar container text-center">
-                <div class="row justify-content-center">
-               
-            
-                <li class="nav-item border border-light rounded">
-                <a class="nav-link text-light " asp-area="" asp-controller="Kullanici" asp-action="Index">Kullanici</a>
-                        </li>
+                        <div class="col-md-2">
+                            <li class="nav-item border border-light rounded">
+                                <a class="nav-link text-light " asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
                         </div>
-                          <div class="col ">
-                    <li class="nav-item border border-light rounded">
-                        <a class="nav-link text-light " asp-area="" asp-controller="Doktor" asp-action="Index">Doktor</a>
-                    </li>
-                     </div>
-                          <div class="col ">
-                    <li class="nav-item border border-light rounded">
-                        <a class="nav-link text-light" asp-area="" asp-controller="AnaBilimDali" asp-action="Index">Ana Bilim Dali</a>
-                    </li>
-                     </div>
-                     <div class="col ">                 
-                    <li class="nav-item border border-light rounded">
-                        <a class="nav-link text-light " asp-area="" asp-controller="Hastane" asp-action="Index">Hastane</a>
-                    </li>
+                        <div class="col-md-2">
+                            <li class="nav-item border border-light rounded">
+                                <a class="nav-link text-light " asp-area="" asp-controller="Login" asp-action="LogOut">Çıkış</a>
+                            </li>
+                        </div>
+                        <!-- Add more col-md-2 for additional columns -->
                     </div>
-                    <div class="col ">   
-                    <li class="nav-item border border-light rounded">
-                        <a class="nav-link text-light " asp-area="" asp-controller="Poliklinik" asp-action="Index">Poliklinik</a>
-                    </li>
-                      </div>
-                      <div class="col "> 
-                   <li class="nav-item border border-light rounded">
-                <a class="nav-link text-light " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                            </div>
-                              <div class="col "> 
-                    <li class="nav-item border border-light rounded">
-                        <a class="nav-link text-light " asp-area="" asp-controller="Login" asp-action="LogOut">Çıkış</a>
-                    </li>
-                     </div>
-
-                    <!-- Diğer navbar öğeleri -->
-                    </div>
-                     
-              
-            </header>
+                </div>
+          
             <div class="container">
                 <main role="main" class="pb-3">
                     @RenderBody()
                 </main>
             </div>
-           
+        }
+        else if (Kullanici != null && userRole == "2")
+        {
 
+            <div class="container Continer2 h-25">
+                    <div class="row">
+                    
+                        <div class="col">
+                        <li class="nav-item border border-light rounded">
+                                <a class="nav-link text-light " asp-area="" asp-controller="Kullanici" asp-action="Index">Kullanici</a>
+                            </li>
+                        </div>
+                        <div class="col">
+                        <li class="nav-item border border-light rounded">
+                                <a class="nav-link text-light " asp-area="" asp-controller="Doktor" asp-action="Index">Doktor</a>
+                            </li>
+                        </div>
+                        <div class="col">
+                        <li class="nav-item border border-light rounded">
+                                <a class="nav-link text-light" asp-area="" asp-controller="AnaBilimDali" asp-action="Index">Ana Bilim Dali</a>
+                            </li>
+                        </div>
+                        <div class="col">
+                        <li class="nav-item border border-light rounded">
+                                <a class="nav-link text-light " asp-area="" asp-controller="Hastane" asp-action="Index">Hastane</a>
+                            </li>
+                        </div>
+                        <div class="col">
+                        <li class="nav-item border border-light rounded">
+                                <a class="nav-link text-light " asp-area="" asp-controller="Poliklinik" asp-action="Index">Poliklinik</a>
+                            </li>
+                        </div>
+                        <div class="col ">
+                        <li class="nav-item border border-light rounded">
+                                <a class="nav-link text-light " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                        </div>
+                        <div class="col">
+                            <li class="nav-item border border-light rounded">
+                                <a class="nav-link text-light " asp-area="" asp-controller="Login" asp-action="LogOut">Çıkış</a>
+                            </li>
+                        </div>
+                        <!-- Add more col for additional columns -->
+                    </div>
+                </div>
+     
+            <div class="container">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
         }
         else
         {
@@ -164,6 +148,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
 
 </body>
 </html>
