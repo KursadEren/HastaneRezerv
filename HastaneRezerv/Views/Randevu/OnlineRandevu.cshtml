@@ -4,7 +4,26 @@
 @{
     ViewData["Title"] = "Hastane Randevu Sistemi";
 }
-
+  @if (TempData["hata"] is not null)
+    {
+        <div class="alert alert-danger">@TempData["hata"]</div>
+    }
+    <div>
+    @if (ViewBag.AdSoyadList != null)
+    {
+        <h4>Ad Soyad Listesi:</h4>
+        <ul>
+            @foreach (var item in ViewBag.AdSoyadList)
+            {
+                <li>@item</li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>Ad Soyad Listesi Boş veya Tanımsız</p>
+    }
+</div>
 <div class="container text-center">
     <div class="col">
         <div class="container form-group mt-4 p-2 col-md-12">

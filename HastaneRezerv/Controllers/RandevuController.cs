@@ -17,12 +17,13 @@ namespace HastaneRezerv.Controllers
         {
             return View();
         }
+        
         public IActionResult DoktorSec2(Doktor Model)
         {
-            TempData["hata"] = Model.AnaBilimDaliId + " " + Model.PoliklinikId;
            
             
             ViewBag.AdSoyadList = GetAdSoyad(Model);
+            
             return View();
         }
         public IActionResult DoktorSec()
@@ -33,13 +34,27 @@ namespace HastaneRezerv.Controllers
             ViewBag.PoliklinikList = GetPoliklinik();
             return View();
         }
-        public IActionResult OnlineRandevu()
+        public async Task<IActionResult> OnlineRandevu(Doktor model)
         {
-            var randevular = _context.Randevu.ToList();
-            ViewBag.Randevular = randevular;
+            TempData["hata"] = model.DoktorId;
+            try
+            {
+                // Perform your query using DoktorId
+                var randevular = await _context.Randevu
+                    .Where(r => r.DoktorId == model.DoktorId)
+                    .ToListAsync();
 
-            return View(randevular);
+                // Pass the result to the view
+                ViewBag.Randevular = randevular;
+                return View(randevular);
+            }
+            catch (Exception ex)
+            {
+                TempData["hata"] = "Sorgu sırasında bir hata oluştu: " + ex.Message;
+                return View();
+            }
         }
+
         private List<SelectListItem> GetAktiflik()
         {
             // Veritabanından hastane verilerini çek
@@ -77,7 +92,7 @@ namespace HastaneRezerv.Controllers
                 .Where(d => d.PoliklinikId == model.PoliklinikId && d.AnaBilimDaliId == model.AnaBilimDaliId)
                 .Select(d => new SelectListItem { Value = d.DoktorId.ToString(), Text = d.AdSoyad })
                 .ToList();
-
+            
             return doktorList;
         }
 
