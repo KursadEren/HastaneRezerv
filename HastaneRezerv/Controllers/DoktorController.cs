@@ -1,5 +1,6 @@
 ﻿using HastaneRezerv.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Net.Http;
@@ -48,8 +49,12 @@ namespace HastaneRezerv.Controllers
 
         public IActionResult Create()
         {
-
-            return View();
+           
+            ViewBag.AnaBilimDaliList = GetAnaBilimDali();
+             ViewBag.AktiflikList = GetAktiflik();
+            ViewBag.PoliklinikList = GetPoliklinik();
+            return View(new Doktor());
+           
         }
         [HttpPost]
         public IActionResult Create(Doktor Model)
@@ -57,7 +62,7 @@ namespace HastaneRezerv.Controllers
 
             if (!ModelState.IsValid)
             {
-                Model.AktiflikId = 3;// default
+               
                 k.Doktor.Add(Model);
                 //k.Add(y);
 
@@ -80,6 +85,9 @@ namespace HastaneRezerv.Controllers
         public IActionResult Edit(int? id)
         {
             var Doktor = k.Doktor.FirstOrDefault(k => k.DoktorId == id);
+            ViewBag.AnaBilimDaliList = GetAnaBilimDali();
+            ViewBag.AktiflikList = GetAktiflik();
+            ViewBag.PoliklinikList = GetPoliklinik();
             return View(Doktor);
 
         }
@@ -150,6 +158,36 @@ namespace HastaneRezerv.Controllers
         private bool DoktorExist(int id)
         {
             return (k.Doktor?.Any(e => e.DoktorId == id)).GetValueOrDefault();
+        }
+
+        private List<SelectListItem> GetAktiflik()
+        {
+            // Veritabanından hastane verilerini çek
+            var Aktiflik = k.Aktiflik
+                .Select(h => new SelectListItem { Value = h.AktiflikId.ToString(), Text = h.Durum })
+                .ToList();
+
+            return Aktiflik;
+        }
+
+        private List<SelectListItem> GetPoliklinik()
+        {
+            // Veritabanından hastane verilerini çek
+            var Poliklinik = k.Poliklinik
+                .Select(h => new SelectListItem { Value = h.PoliklinikId.ToString(), Text = h.PoliklinikAdi })
+                .ToList();
+
+            return Poliklinik;
+        }
+
+        private List<SelectListItem> GetAnaBilimDali()
+        {
+            // Veritabanından hastane verilerini çek
+            var AnaBilimDali = k.AnaBilimDali
+                .Select(h => new SelectListItem { Value = h.AnaBilimDaliId.ToString(), Text = h.AnaBilimDaliAdi })
+                .ToList();
+
+            return AnaBilimDali;
         }
     }
 }

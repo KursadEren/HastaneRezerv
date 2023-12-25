@@ -10,6 +10,6 @@
         public Doktor Doktor { get; set; }
         public Kullanici Kullanici { get; set; }
         public Aktiflik Aktiflik { get; set; }
-
+       
     }
 }

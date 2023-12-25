@@ -1,0 +1,101 @@
+﻿
+@model List<HastaneRezerv.Models.Randevu>
+
+@{
+    ViewData["Title"] = "Hastane Randevu Sistemi";
+}
+
+<div class="container text-center">
+    <div class="col">
+        <div class="container form-group mt-4 p-2 col-md-12">
+            <h1>Hastane Randevu Sistemi</h1>
+            <div id="randevu-saatleri">
+                @for (int saat = 9; saat < 17; saat++)
+                {
+                    for (int dakika = 0; dakika < 60; dakika += 30)
+                    {
+                        var randevuSaat = $"{saat.ToString("00")}:{dakika.ToString("00")}";
+                        var randevu = Model.FirstOrDefault(r => r.Tarih.ToString("HH:mm") == randevuSaat);
+
+                        <div class="randevu-saati @((randevu != null && randevu.AktiflikId == 1) ? "randevu-dolu" : "")" data-randevu-id="@randevu?.RandevuId ?? 0">
+                            @randevuSaat
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const randevuSaatleriDiv = document.getElementById("randevu-saatleri");
+
+            // Sunucudan gelen randevuları işle
+            const randevular = @Html.Raw(Json.Serialize(Model));
+
+            randevular.forEach(randevu => {
+                const randevuDiv = document.querySelector(`.randevu-saati[data-randevu-id="${randevu.RandevuId}"]`);
+
+                if (randevuDiv) {
+                    randevuDiv.classList.add("randevu-dolu");
+                    // Burada tıklanan randevu saati ile ilgili bir işlem gerçekleştirebilirsiniz.
+                    randevuDiv.addEventListener("click", function () {
+                        alert(`Randevu alındı: ${randevu.Tarih}`);
+                    });
+                }
+            });
+        });
+    </script>
+}
+<style>
+    body {
+    background:black;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    width:auto;
+    height:auto;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+#randevu-saatleri {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.randevu-saati {
+    width: calc(33.33% - 10px);
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.randevu-dolu {
+    background-color: #ff9999; /* Kırmızı arkaplan */
+}
+
+.randevu-saati:hover {
+    background-color: #f0f0f0;
+}
+
+</style>

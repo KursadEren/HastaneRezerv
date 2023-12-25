@@ -26,7 +26,7 @@ namespace HastaneRezerv.Controllers
 
             if (!ModelState.IsValid)
             {
-                Model.AktiflikId = 3;// default
+                Model.AktiflikId = 1;// default
                 k.AnaBilimDali.Add(Model);
                 //k.Add(y);
 

@@ -27,7 +27,7 @@ namespace HastaneRezerv.Controllers
 
             if (!ModelState.IsValid)
             {
-                Model.AktiflikId = 3;// default
+                
                 k.Poliklinik.Add(Model);
                 //k.Add(y);
 
@@ -43,7 +43,8 @@ namespace HastaneRezerv.Controllers
         public IActionResult Create()
         {
             ViewBag.HastaneList = GetHastaneList();
-
+            ViewBag.AktiflikList = GetAktiflik();
+           
             // Yeni bir Hastane modeli oluşturarak view'e gönder
             return View(new Poliklinik());
 
@@ -136,6 +137,15 @@ namespace HastaneRezerv.Controllers
                 .ToList();
 
             return hastaneler;
+        }
+        private List<SelectListItem> GetAktiflik()
+        {
+            // Veritabanından hastane verilerini çek
+            var Aktiflik = k.Aktiflik
+                .Select(h => new SelectListItem { Value = h.AktiflikId.ToString(), Text = h.Durum })
+                .ToList();
+
+            return Aktiflik;
         }
 
     }

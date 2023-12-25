@@ -1,5 +1,6 @@
 ﻿using HastaneRezerv.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace HastaneRezerv.Controllers
@@ -34,7 +35,7 @@ namespace HastaneRezerv.Controllers
 
             if (!ModelState.IsValid)
             {
-                Model.AktiflikId = 3;// default
+              
                 k.Hastane.Add(Model);
                 //k.Add(y);
 
@@ -49,7 +50,9 @@ namespace HastaneRezerv.Controllers
         }
         public IActionResult Create()
         {
-            return View();
+            ViewBag.AktiflikList = GetAktiflik();
+            return View(new Hastane());
+      
         }
         public IActionResult Delete()
         {
@@ -124,6 +127,16 @@ namespace HastaneRezerv.Controllers
         private bool HastaneExist(int id)
         {
             return (k.Hastane?.Any(e => e.HastaneId == id)).GetValueOrDefault();
+        }
+
+        private List<SelectListItem> GetAktiflik()
+        {
+            // Veritabanından hastane verilerini çek
+            var Aktiflik = k.Aktiflik
+                .Select(h => new SelectListItem { Value = h.AktiflikId.ToString(), Text = h.Durum })
+                .ToList();
+
+            return Aktiflik;
         }
     }
 }

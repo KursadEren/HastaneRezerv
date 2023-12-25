@@ -37,6 +37,12 @@ namespace HastaneRezerv.Controllers
             return View();
         }
 
+        public IActionResult OnlineRandevu()
+        {
+            // Hastane sayfasının işlemleri
+            return View();
+        }
+
         public async Task<IActionResult> LogOut()
         {
             // Hastane sayfasının işlemleri

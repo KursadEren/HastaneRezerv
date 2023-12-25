@@ -28,10 +28,7 @@ namespace HastaneRezerv.Controllers
         }
         [Authorize]
 
-        public IActionResult OnlineRandevu()
-        {
-            return View();
-        }
+       
         public IActionResult Doktorlar()
         {
             return View();
