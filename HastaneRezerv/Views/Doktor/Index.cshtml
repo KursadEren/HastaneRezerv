@@ -28,6 +28,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Poliklinik.PoliklinikAdi)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Aktiflik.Durum)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -48,6 +51,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Poliklinik.PoliklinikAdi)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Aktiflik.Durum)
+                </td>
             <td>
                 <td>
                     <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.DoktorId">Düzenle</a> |

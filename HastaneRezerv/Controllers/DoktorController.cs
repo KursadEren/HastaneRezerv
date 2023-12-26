@@ -21,7 +21,8 @@ namespace HastaneRezerv.Controllers
         {
             var HastaneContext = k.Doktor
              .Include(doktor => doktor.AnaBilimDali) // AnaBilimDali ile ilişkilendir
-             .Include(doktor => doktor.Poliklinik);
+             .Include(doktor => doktor.Poliklinik)
+             .Include(doktor => doktor.Aktiflik);
 
             return View(await HastaneContext.ToListAsync());
             
@@ -138,20 +139,22 @@ namespace HastaneRezerv.Controllers
                 TempData["hata"] = "Id değeri yanlış";
                 return View();
             }
-            int pasifDurumId = 4;
+           
 
             var kullanici = k.Doktor.FirstOrDefault(k => k.DoktorId == id);
 
             if (kullanici != null)
             {
                 // Kullanıcının aktiflik durumunu güncelle
-                var aktiflik = k.Aktiflik.FirstOrDefault(a => a.AktiflikId == kullanici.AktiflikId);
+                var aktiflik = k.Aktiflik.FirstOrDefault(a => a.Durum == "Pasif");
+                var pasifDurumId = k.Aktiflik.FirstOrDefault(a => a.AktiflikId == aktiflik.AktiflikId);
 
                 if (aktiflik != null)
                 {
-                    kullanici.AktiflikId = pasifDurumId; // Pasif durumu ID'sini kullanarak güncelle
+                    kullanici.AktiflikId = pasifDurumId.AktiflikId; // Pasif durumu ID'sini kullanarak güncelle
                     k.SaveChanges();
                 }
+
 
             }
             // Diğer işlemler

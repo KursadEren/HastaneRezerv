@@ -1,5 +1,6 @@
 ﻿using HastaneRezerv.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Drawing;
 using static NuGet.Packaging.PackagingConstants;
@@ -17,8 +18,10 @@ namespace HastaneRezerv.Controllers
         }
         public IActionResult Index()
         {
-            var y = k.Kullanici.ToList();
-            
+            var y = k.Kullanici
+                .Include(doktor => doktor.Aktiflik)
+                .Include(doktor => doktor.Unvan);
+
             return View(y);
             
         }
@@ -56,6 +59,9 @@ namespace HastaneRezerv.Controllers
         public IActionResult Edit(int ?id)
         {
             var kullanici = k.Kullanici.FirstOrDefault(k => k.KullaniciId == id);
+           
+            ViewBag.AktiflikList = GetAktiflik();
+            ViewBag.UnvanList = GetUnvan();
             return View(kullanici);
            
         }
@@ -125,6 +131,25 @@ namespace HastaneRezerv.Controllers
         private bool KullaniciExist(int id)
         {
             return (k.Kullanici?.Any(e => e.KullaniciId == id)).GetValueOrDefault();
+        }
+
+        private List<SelectListItem> GetAktiflik()
+        {
+            // Veritabanından hastane verilerini çek
+            var Aktiflik = k.Aktiflik
+                .Select(h => new SelectListItem { Value = h.AktiflikId.ToString(), Text = h.Durum })
+                .ToList();
+
+            return Aktiflik;
+        }
+        private List<SelectListItem> GetUnvan()
+        {
+            // Veritabanından hastane verilerini çek
+            var Unvan = k.Unvan
+                .Select(h => new SelectListItem { Value = h.UnvanId.ToString(), Text = h.UnvanAdi })
+                .ToList();
+
+            return Unvan;
         }
     }
 }
