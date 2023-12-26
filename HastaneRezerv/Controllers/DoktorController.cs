@@ -17,10 +17,14 @@ namespace HastaneRezerv.Controllers
             _httpClientFactory = httpClientFactory;
             k = context;
         }
-        public IActionResult Index()
+        public async  Task<IActionResult> Index()
         {
-            var y = k.Doktor.ToList();
-            return View(y);
+            var HastaneContext = k.Doktor
+             .Include(doktor => doktor.AnaBilimDali) // AnaBilimDali ile ilişkilendir
+             .Include(doktor => doktor.Poliklinik);
+
+            return View(await HastaneContext.ToListAsync());
+            
  
         }
 
@@ -92,9 +96,9 @@ namespace HastaneRezerv.Controllers
 
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(int? id, [Bind(" DoktorId,AdSoyad,TcNo,AnaBilimDaliId ,PoliklinikId,AktiflikId")] Doktor Doktor)
+        public async Task<IActionResult> Edit(int? id, [Bind("DoktorId, AdSoyad,TcNo,AnaBilimDaliId ,PoliklinikId,AktiflikId")] Doktor Doktor)
         {
-
+            TempData["hata"] = Doktor.PoliklinikId + " " + Doktor.AnaBilimDaliId + " " + Doktor.DoktorId;
             if (id != Doktor.DoktorId)
             {
                 return NotFound();

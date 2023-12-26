@@ -12,24 +12,22 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="PoliklinikId" class="control-label"></label>
-                <input asp-for="PoliklinikId" class="form-control" />
-                <span asp-validation-for="PoliklinikId" class="text-danger"></span>
-            </div>
+            
+                <input type="hidden" asp-for="PoliklinikId" class="form-control" />
+              
             <div class="form-group">
                 <label asp-for="PoliklinikAdi" class="control-label"></label>
                 <input asp-for="PoliklinikAdi" class="form-control" />
                 <span asp-validation-for="PoliklinikAdi" class="text-danger"></span>
             </div>
-            <div class="form-group">
+           <div class="form-group">
                 <label asp-for="HastaneId" class="control-label"></label>
-                <input asp-for="HastaneId" class="form-control" />
+                <select asp-for="HastaneId" asp-items="ViewBag.GetHastane" class="form-control"></select>
                 <span asp-validation-for="HastaneId" class="text-danger"></span>
             </div>
-            <div class="form-group">
+           <div class="form-group">
                 <label asp-for="AktiflikId" class="control-label"></label>
-                <input asp-for="AktiflikId" class="form-control" />
+                <select asp-for="AktiflikId" asp-items="ViewBag.AktiflikList" class="form-control"></select>
                 <span asp-validation-for="AktiflikId" class="text-danger"></span>
             </div>
             <div class="form-group">

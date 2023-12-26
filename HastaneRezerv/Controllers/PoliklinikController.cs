@@ -14,10 +14,13 @@ namespace HastaneRezerv.Controllers
             k = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var y = k.Poliklinik.ToList();
-            return View(y);
+            var HastaneContext = k.Poliklinik
+            .Include(doktor => doktor.Hastane) // AnaBilimDali ile ilişkilendir
+            .Include(doktor => doktor.Aktiflik);
+
+            return View(await HastaneContext.ToListAsync());
 
 
         }
@@ -65,18 +68,19 @@ namespace HastaneRezerv.Controllers
                 TempData["hata"] = "Id değeri yanlış";
                 return View();
             }
-            int pasifDurumId = 4;
+           
 
             var kullanici = k.Poliklinik.FirstOrDefault(k => k.PoliklinikId == id);
 
             if (kullanici != null)
             {
                 // Kullanıcının aktiflik durumunu güncelle
-                var aktiflik = k.Aktiflik.FirstOrDefault(a => a.AktiflikId == kullanici.AktiflikId);
-
+                var aktiflik = k.Aktiflik.FirstOrDefault(a => a.Durum ==   "Pasif");
+                var pasifDurumId = k.Aktiflik.FirstOrDefault(a => a.AktiflikId == aktiflik.AktiflikId);
+                
                 if (aktiflik != null)
                 {
-                    kullanici.AktiflikId = pasifDurumId; // Pasif durumu ID'sini kullanarak güncelle
+                    kullanici.AktiflikId = pasifDurumId.AktiflikId; // Pasif durumu ID'sini kullanarak güncelle
                     k.SaveChanges();
                 }
 
@@ -95,6 +99,8 @@ namespace HastaneRezerv.Controllers
         public IActionResult Edit(int? id)
         {
             var kullanici = k.Poliklinik.FirstOrDefault(k => k.PoliklinikId == id);
+            ViewBag.AktiflikList = GetAktiflik();
+            ViewBag.GetHastane = GetHastaneList();
             return View(kullanici);
 
         }

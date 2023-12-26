@@ -22,10 +22,12 @@ namespace HastaneRezerv.Controllers
 
         }
 
-        public IActionResult Index()
+        public async  Task<IActionResult> Index()
         {
-            var y = k.Hastane.ToList();
-            return View(y);
+            var HastaneContext = k.Hastane
+            .Include(Hastane => Hastane.Aktiflik); // AnaBilimDali ile ilişkilendir
+            
+            return View(await HastaneContext.ToListAsync());
 
 
         }
@@ -94,6 +96,8 @@ namespace HastaneRezerv.Controllers
         public IActionResult Edit(int? id)
         {
             var kullanici = k.Hastane.FirstOrDefault(k => k.HastaneId == id);
+            ViewBag.AktiflikList = GetAktiflik();
+           
             return View(kullanici);
 
         }

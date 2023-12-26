@@ -12,14 +12,15 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.PoliklinikId)
-            </th>
+          
             <th>
                 @Html.DisplayNameFor(model => model.PoliklinikAdi)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HastaneId)
+                @Html.DisplayNameFor(model => model.Hastane.HastaneAdi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Aktiflik.Durum)
             </th>
             <th></th>
         </tr>
@@ -27,14 +28,15 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.PoliklinikId)
-            </td>
+           
             <td>
                 @Html.DisplayFor(modelItem => item.PoliklinikAdi)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.HastaneId)
+                @Html.DisplayFor(modelItem => item.Hastane.HastaneAdi)
+            </td>
+             <td>
+                    @Html.DisplayFor(modelItem => item.Aktiflik.Durum)
             </td>
                 <td>
                     <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.PoliklinikId">Düzenle</a> |

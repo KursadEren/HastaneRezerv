@@ -5,16 +5,17 @@
 }
 
 <h1>View</h1>
-
+ @if (TempData["hata"] is not null)
+    {
+        <div class="alert alert-danger">@TempData["hata"]</div>
+    }
 <p>
     <a asp-action="Create" class="btn btn-success">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.DoktorId)
-            </th>
+           
             <th>
                 @Html.DisplayNameFor(model => model.AdSoyad)
             </th>
@@ -22,10 +23,10 @@
                 @Html.DisplayNameFor(model => model.TcNo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AnaBilimDaliId)
+                @Html.DisplayNameFor(model => model.AnaBilimDali.AnaBilimDaliAdi)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PoliklinikId)
+                @Html.DisplayNameFor(model => model.Poliklinik.PoliklinikAdi)
             </th>
             <th></th>
         </tr>
@@ -33,9 +34,8 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DoktorId)
-            </td>
+           
+
             <td>
                 @Html.DisplayFor(modelItem => item.AdSoyad)
             </td>
@@ -43,10 +43,10 @@
                 @Html.DisplayFor(modelItem => item.TcNo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AnaBilimDaliId)
+                @Html.DisplayFor(modelItem => item.AnaBilimDali.AnaBilimDaliAdi)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PoliklinikId)
+                @Html.DisplayFor(modelItem => item.Poliklinik.PoliklinikAdi)
             </td>
             <td>
                 <td>
