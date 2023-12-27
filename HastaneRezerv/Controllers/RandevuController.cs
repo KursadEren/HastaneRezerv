@@ -20,7 +20,7 @@ namespace HastaneRezerv.Controllers
         
         public IActionResult DoktorSec2(Doktor Model)
         {
-
+          
             ViewBag.TarihSecenekleri = GetTarihSecenekleri();
             ViewBag.AdSoyadList = GetAdSoyad(Model);
             
@@ -34,16 +34,18 @@ namespace HastaneRezerv.Controllers
             ViewBag.PoliklinikList = GetPoliklinik();
             return View();
         }
-        public async Task<IActionResult> OnlineRandevu(Doktor model)
+        public async Task<IActionResult> OnlineRandevu(RandevuOlustur model)
         {
-            TempData["hata"] = model.DoktorId;
             try
             {
-                // Perform your query using DoktorId
+                // Perform your query using DoktorIdw
                 var randevular = await _context.Randevu
-                    .Where(r => r.DoktorId == model.DoktorId)
+                    .Where(r => r.DoktorId == model.Doktor.DoktorId && r.Tarih == DateTime.Parse(model.Tarih))                    
                     .ToListAsync();
                
+                ViewBag.GetDoktor = GetDoktor(model.Doktor.DoktorId);
+               
+                ViewBag.GetTarih = model.Tarih;
                 // Pass the result to the view
                 ViewBag.Randevular = randevular;
                 return View(randevular);
@@ -54,7 +56,10 @@ namespace HastaneRezerv.Controllers
                 return View();
             }
         }
-
+        public IActionResult Tamamla(string secilenSaat)
+        {
+            return View();
+        }
         private List<SelectListItem> GetAktiflik()
         {
             // Veritabanından hastane verilerini çek
@@ -92,9 +97,33 @@ namespace HastaneRezerv.Controllers
                 .Where(d => d.PoliklinikId == model.PoliklinikId && d.AnaBilimDaliId == model.AnaBilimDaliId)
                 .Select(d => new SelectListItem { Value = d.DoktorId.ToString(), Text = d.AdSoyad })
                 .ToList();
-            
+            if(doktorList.Count > 0)
             return doktorList;
+            return null;
         }
+        private SelectListItem GetDoktor(int model)
+        {
+            // Veritabanından doktor verisini çek
+            var doktor = _context.Doktor
+                .FirstOrDefault(d => d.DoktorId == model);
+
+            if (doktor != null)
+            {
+                // Belirli bir doktor bulunduğunda, SelectListItem'i oluştur ve döndür
+                return new SelectListItem
+                {
+                    Text = doktor.AdSoyad, // Sadece Text özelliği dolduruluyor
+                    Value = doktor.DoktorId.ToString() // Ancak arka planda Value değeri de alınabilir
+                };
+            }
+            else
+            {
+                // Belirli bir DoktorId ile eşleşen doktor bulunamadı.
+                return new SelectListItem { Text = "", Value = "" };
+            }
+        }
+
+
         private List<SelectListItem> GetTarihSecenekleri()
         {
             var baslangicTarihi = DateTime.Now;
