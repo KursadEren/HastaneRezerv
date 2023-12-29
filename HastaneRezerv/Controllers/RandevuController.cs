@@ -56,8 +56,20 @@ namespace HastaneRezerv.Controllers
                 return View();
             }
         }
-        public IActionResult Tamamla(string secilenSaat)
+        public IActionResult Tamamla(RandevuTamamlaModel model)
         {
+            
+
+            if (!ModelState.IsValid)
+            {
+
+               
+
+               
+                return View("Views/Home/Index.cshtml");
+            }
+            TempData["msj"] = "Ekleme başarısız";
+
             return View();
         }
         private List<SelectListItem> GetAktiflik()

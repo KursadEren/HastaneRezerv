@@ -20,7 +20,9 @@ namespace HastaneRezerv.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Kullanici>>> GetDoktor()
         {
-            var kullanici = await _context.Doktor.ToListAsync();
+            var kullanici = await _context.Doktor
+           .Include(doktor => doktor.Poliklinik) // AnaBilimDali ile ilişkilendir
+           .Include(doktor => doktor.AnaBilimDali).ToListAsync();
             return Ok(kullanici);
         }
     }

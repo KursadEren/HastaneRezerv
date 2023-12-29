@@ -55,6 +55,10 @@
     </style>
 </head>
 <body>
+    @if (TempData["hata"] is not null)
+    {
+        <div class="alert alert-danger">@TempData["hata"]</div>
+    }
 
     <div class="container text-center mt-5">
         <div class="row">

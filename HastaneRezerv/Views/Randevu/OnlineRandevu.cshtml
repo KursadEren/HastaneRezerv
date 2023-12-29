@@ -7,68 +7,56 @@
 {
     <div class="alert alert-danger">@TempData["hata"]</div>
 }
-<div>
-    @if (ViewBag.AdSoyadList != null)
-    {
-        <h4>Ad Soyad Listesi:</h4>
-        <ul>
-            @foreach (var item in ViewBag.AdSoyadList)
-            {
-                <li>@item</li>
-            }
-        </ul>
-    }
-    else
-    {
-        <p>Ad Soyad Listesi Boş veya Tanımsız</p>
-    }
-</div>
-<div class="container text-center">
-    <div class="col">
-        <div class="container form-group mt-4 p-2 col-md-12">
-            <h1>Hastane Randevu Sistemi</h1>
-           
-            <div id="randevu-saatleri">
-                @for (int saat = 9; saat < 17; saat++)
-                {
-                    for (int dakika = 0; dakika < 60; dakika += 30)
+
+
+
+            <div class="container form-group mt-4 p-2 col-md-12">
+                <h1>Hastane Randevu Sistemi</h1>
+
+                <div id="randevu-saatleri">
+                    @for (int saat = 9; saat < 17; saat++)
                     {
-                        var randevuSaat = $"{saat.ToString("00")}:{dakika.ToString("00")}";
-                        var randevu = Model.FirstOrDefault(r => r.Tarih.ToString("HH:mm") == randevuSaat);
+                        for (int dakika = 0; dakika < 60; dakika += 30)
+                        {
+                            var randevuSaat = $"{saat.ToString("00")}:{dakika.ToString("00")}";
+                            var randevu = Model.FirstOrDefault(r => r.Tarih.ToString("HH:mm") == randevuSaat);
 
-                        <div class="randevu-saati @((randevu != null && randevu.AktiflikId == 1) ? "randevu-dolu" : "")"
-                     data-randevu-id="@randevu?.RandevuId ?? 0">
-                            @randevuSaat
-                        </div>
+                            <div class="randevu-saati @((randevu != null && randevu.AktiflikId == 1) ? "randevu-dolu" : "")"
+                         data-randevu-id="@randevu?.RandevuId ?? 0">
+                                @randevuSaat
+                            </div>
+                        }
                     }
-                }
+                </div>
+
+    <form asp-action="Tamamla" asp-controller="Randevu" id="randevuForm" method="post">
+        <div class="row">
+            <div class="form-group .col-12 col-md-4">
+                <label for="selectedTime">Seçilen Saat:</label>
+                <input type="text" id="selectedTime" name="SelectedTime" class="form-control" readonly value="@ViewBag.SelectedTime" />
             </div>
-            <div class="container">
-                
-             <form asp-action="" asp-controller="" id="randevuForm">
-                <!-- Your form fields go here -->
-                    <div class="row">
-                <div class="form-group col-md-4">
-                    <label for="selectedTime">Seçilen Saat:</label>
-                    <input type="text" id="selectedTime" name="selectedTime" class="form-control" readonly />
-                </div>
-                        <div class="form-group col-md-4">
-                        <label for="selectedDateLabel">Seçilen Doktor:</label>
-                        <label id="selectedDateLabel" class="form-control">@((ViewBag.GetDoktor as SelectListItem)?.Text)</label>
-                    </div>
 
 
-                        <div class="form-group col-md-4">
-                    <label for="selectedDateLabel">Seçilen Tarih:</label>
-                    <label id="selectedDateLabel" class="form-control">@ViewBag.GetTarih</label>
-                </div>
-                    </div>
-            </form>
-            
+            <div class="form-group col-12 col-md-4">
+                <label for="SelectedDoktor">Seçilen Doktor:</label>
+                <input type="text" id="SelectedDoktor" name="SelectedDoktor" class="form-control" readonly value="@((ViewBag.GetDoktor as SelectListItem)?.Text)" />
+            </div>
+
+            <div class="form-group col-12 col-md-4">
+                <label for="SelectedTarih">Seçilen Tarih:</label>
+                <input type="text" id="SelectedTarih" name="SelectedTarih" class="form-control" readonly value="@ViewBag.GetTarih" />
             </div>
         </div>
-    </div>
-</div>
+        <div class="row justify-content-center align-items-center">
+            <div class="col-12 col-md-4 mt-2 d-flex justify-content-center align-items-center">
+                <input type="submit" value="Oluştur" class="btn btn-primary" />
+            </div>
+        </div>
+    </form>
+
+    
+
+
 
 @section scripts {
     <script>
@@ -100,17 +88,10 @@
 }
 
 <style>
-    body {
-    background:black;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    width:auto;
-    height:auto;
-}
+    
 
 .container {
-    max-width: 800px;
+    
     margin: 50px auto;
     padding: 20px;
     background-color: #f4f4f4;
@@ -149,3 +130,16 @@ h1 {
 }
 
 </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
