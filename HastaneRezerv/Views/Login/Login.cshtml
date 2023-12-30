@@ -32,14 +32,18 @@
                 </div>
                 <div class="form-group mt-4 p-2 col-md-12">
 
-                    <button   type="submit" class="btn border border-light d">Kayıt ol</button>
+                        <button type="button" class="btn border border-light d" onclick="redirectToSignIn()">Sign In</button>
                     <button  type="submit" class="btn border border-light d">Sign In</button>
                 </div>
                 
             </form>
         </div>
     </div>
-
+    <script>
+    function redirectToSignIn() {
+        window.location.href = '/SignIn/SignIn';
+    }
+</script>
     <style>
         body, html {
             margin: 0;
