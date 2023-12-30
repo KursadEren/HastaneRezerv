@@ -3,56 +3,43 @@
 @{
     ViewData["Title"] = "View";
 }
-<script> 
+
+<style>
     .card {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background-color: #fff;
-            max-width: 300px;
-            margin: 0 auto; /* Bu satırı ekleyerek card'ı ortala */
-            text-align: center; /* İçerikleri ortala */
-            height: 200px;
-        }
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 16px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        text-align: center;
+        margin-bottom: 20px;
+    }
 
-     .button {
-            border: none;
-            background-color: white;
-            cursor: pointer; /* İsteğe bağlı olarak ekleyebilirsiniz */
-        }
-</script>
+    .card img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 50%;
+    }
+</style>
 
-<h1>View</h1>
-<div class="card" style="width: 18rem;">
-  <img src="..." class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
+<div class="container">
+    @if (Model != null)
+    {
+        <div class="row">
+            @foreach (var item in Model) {
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card">
+                        <img src="~/image/indir.jpeg" alt="Doctor Image" class="mb-3">
+                        <h4>@item.AdSoyad</h4>
+                        <p>Ana Bilim Dalı: @(item.AnaBilimDali != null ? item.AnaBilimDali.AnaBilimDaliAdi : "Bilgi Yok")</p>
+                        <p>Poliklinik: @(item.Poliklinik != null ? item.Poliklinik.PoliklinikAdi : "Bilgi Yok")</p>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p>Model verisi null.</p>
+    }
 </div>
-
-
-
-<div>
-    @foreach (var item in Model) {
-        
-        <div class="card button">
-
-            
-                @Html.DisplayFor(modelItem => item.DoktorId)
-            
-                @Html.DisplayFor(modelItem => item.AdSoyad)
-            
-                @Html.DisplayFor(modelItem => item.TcNo)
-            
-                @Html.DisplayFor(modelItem => item.AnaBilimDaliId)
-            
-                @Html.DisplayFor(modelItem => item.PoliklinikId)
-            
-       </div>  
-       
-}
-</div>  
-

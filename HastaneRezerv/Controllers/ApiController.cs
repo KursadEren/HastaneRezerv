@@ -4,12 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-
 namespace HastaneRezerv.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ApiController : Controller
+    public class ApiController : ControllerBase
     {
         private readonly HastaneContext _context;
 
@@ -17,13 +16,25 @@ namespace HastaneRezerv.Controllers
         {
             _context = context;
         }
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Kullanici>>> GetDoktor()
+        public async Task<ActionResult<IEnumerable<Doktor>>> GetDoktor()
         {
-            var kullanici = await _context.Doktor
-           .Include(doktor => doktor.Poliklinik) // AnaBilimDali ile ilişkilendir
-           .Include(doktor => doktor.AnaBilimDali).ToListAsync();
-            return Ok(kullanici);
+            var birlesikVeri = from doktor in _context.Doktor
+                               join poliklinik in _context.Poliklinik
+                               on doktor.PoliklinikId equals poliklinik.PoliklinikId
+                               join anabilimdali in _context.AnaBilimDali
+                               on doktor.AnaBilimDaliId equals anabilimdali.AnaBilimDaliId
+                               select new Doktor
+                               {
+                                   AdSoyad = doktor.AdSoyad,
+                                   AnaBilimDali = new AnaBilimDali { AnaBilimDaliAdi = anabilimdali.AnaBilimDaliAdi },
+                                   Poliklinik = new Poliklinik { PoliklinikAdi = poliklinik.PoliklinikAdi }
+                                   // Diğer özellikleri de buraya ekleyebilirsiniz
+                               };
+
+            return Ok(birlesikVeri);
         }
+
     }
 }
