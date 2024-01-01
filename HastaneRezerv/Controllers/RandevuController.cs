@@ -88,41 +88,63 @@ namespace HastaneRezerv.Controllers
             throw new NotImplementedException();
         }
 
+        public IActionResult RandevuGor()
+        {
+            var userId = HttpContext.Session.GetInt32("USERID");
+
+
+            var randevu = _context.Randevu.
+                Where(d => d.KullaniciId == userId)
+                .Include(d => d.Doktor)
+                .Include(d => d.Kullanici)
+                .Include(d => d.Aktiflik);
+            return View(randevu);
+        }
         public IActionResult Tamamala()
         {
-            var y = _context.Randevu
+           
+                var y = _context.Randevu
                 .Include(doktor => doktor.Aktiflik)
                 .Include(doktor => doktor.Kullanici)
                 .Include(doktor => doktor.Doktor);
+                return View(y);
+           
+                TempData["hata"] = "Saat seçin";
+           
 
-            return View(y);
+            return View();
         }
         public async Task<IActionResult> Tamamla(RandevuTamamlaModel model)
         {
-           
+            try { 
                 Randevu randevu = new Randevu();
 
-                // Doktor tablosundan BelirliBirDoktor adına sahip olan doktorun ID'sini almak için LINQ sorgusu
-                randevu.DoktorId = await _context.Doktor
-                    .Where(d => d.AdSoyad == model.SelectedDoktor)
-                    .Select(d => d.DoktorId)
-                    .FirstOrDefaultAsync();
+            // Doktor tablosundan BelirliBirDoktor adına sahip olan doktorun ID'sini almak için LINQ sorgusu
+            randevu.DoktorId = await _context.Doktor
+                .Where(d => d.AdSoyad == model.SelectedDoktor)
+                .Select(d => d.DoktorId)
+                .FirstOrDefaultAsync();
 
-                randevu.tarihstring = model.SelectedTarih;
-                randevu.saatstring = model.SelectedTime;
-                randevu.Tarih = DateTime.ParseExact($"{model.SelectedTarih} {model.SelectedTime}", "yyyy-MM-dd HH:mm", null);
+            randevu.tarihstring = model.SelectedTarih;
+            randevu.saatstring = model.SelectedTime;
+            randevu.Tarih = DateTime.ParseExact($"{model.SelectedTarih} {model.SelectedTime}", "yyyy-MM-dd HH:mm", null);
 
-                randevu.AktiflikId = await _context.Aktiflik
-                    .Where(d => d.Durum == "Aktif")
-                    .Select(d => d.AktiflikId)
-                    .FirstOrDefaultAsync();
+            randevu.AktiflikId = await _context.Aktiflik
+                .Where(d => d.Durum == "Aktif")
+                .Select(d => d.AktiflikId)
+                .FirstOrDefaultAsync();
 
             var userId = HttpContext.Session.GetInt32("USERID");
 
             randevu.KullaniciId = Convert.ToInt32(userId);
 
-                _context.Randevu.Add(randevu);
-                await _context.SaveChangesAsync();
+            _context.Randevu.Add(randevu);
+            await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                TempData["hata"] = "Saat seçin";
+            }
                 return View();
             
 
