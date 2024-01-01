@@ -53,23 +53,23 @@ namespace HastaneRezerv.Controllers
                         TekrarSifre = model.TekrarSifre,
                         AktiflikId = 1
                     };
+                    if (!await _roleManager.RoleExistsAsync("Admin"))
+                    {
+                        // "Admin" rolü henüz oluşturulmamışsa, oluşturalım.
+                        await _roleManager.CreateAsync(new IdentityRole("Admin"));
+                    }
 
+                    if (!await _roleManager.RoleExistsAsync("User"))
+                    {
+                        // "User" rolü henüz oluşturulmamışsa, oluşturalım.
+                        await _roleManager.CreateAsync(new IdentityRole("User"));
+                    }
                     model.UserName = model.Name;
                     var result = await _userManager.CreateAsync(model, model.sifre);
                     await _userManager.AddToRoleAsync(model, "Admin");
                     if (result.Succeeded)
                     {
-                        if (!await _roleManager.RoleExistsAsync("Admin"))
-                        {
-                            // "Admin" rolü henüz oluşturulmamışsa, oluşturalım.
-                            await _roleManager.CreateAsync(new IdentityRole("Admin"));
-                        }
-
-                        if (!await _roleManager.RoleExistsAsync("User"))
-                        {
-                            // "User" rolü henüz oluşturulmamışsa, oluşturalım.
-                            await _roleManager.CreateAsync(new IdentityRole("User"));
-                        }
+                        
                        
                         // Kullanıcıyı veritabanına ekle
                         k.Kullanici.Add(user);

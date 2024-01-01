@@ -3,8 +3,8 @@
     public class RandevuTamamlaModel
 
     {
-        public Doktor Doktor { get; set; }
-        public string Saat { get ; set; }
-        public string Tarih { get; set; }
+        public string SelectedDoktor { get; set; }
+        public string SelectedTime { get ; set; }
+        public string SelectedTarih { get; set; }
     }
 }

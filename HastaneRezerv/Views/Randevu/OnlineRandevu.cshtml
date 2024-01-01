@@ -3,60 +3,54 @@
 @{
     ViewData["Title"] = "Hastane Randevu Sistemi";
 }
+
 @if (TempData["hata"] is not null)
 {
     <div class="alert alert-danger">@TempData["hata"]</div>
 }
 
+<div class="container form-group mt-4 p-2 col-md-12">
+    <h1>Hastane Randevu Sistemi</h1>
 
+    <div id="randevu-saatleri">
+     
+            @for (int saat = 9; saat < 17; saat++)
+            {
+                for (int dakika = 0; dakika < 60; dakika += 30)
+                {
+                    var randevuSaat = $"{saat.ToString("00")}:{dakika.ToString("00")}";
+                    var randevu = Model.FirstOrDefault(r => r.Tarih.ToString("HH:mm") == randevuSaat);
 
-            <div class="container form-group mt-4 p-2 col-md-12">
-                <h1>Hastane Randevu Sistemi</h1>
+                    <div class="randevu-saati @((randevu != null && randevu.AktiflikId == 1) ? "randevu-dolu" : "")"
+             data-randevu-id="@randevu?.RandevuId ?? 0">
+                        @randevuSaat
+                    </div>
+                }
+            }
+        }
+       
+    </div>
 
-                <div id="randevu-saatleri">
-                    @for (int saat = 9; saat < 17; saat++)
-                    {
-                        for (int dakika = 0; dakika < 60; dakika += 30)
-                        {
-                            var randevuSaat = $"{saat.ToString("00")}:{dakika.ToString("00")}";
-                            var randevu = Model.FirstOrDefault(r => r.Tarih.ToString("HH:mm") == randevuSaat);
-
-                            <div class="randevu-saati @((randevu != null && randevu.AktiflikId == 1) ? "randevu-dolu" : "")"
-                         data-randevu-id="@randevu?.RandevuId ?? 0">
-                                @randevuSaat
-                            </div>
-                        }
-                    }
-                </div>
-
-    <form asp-action="Tamamla" asp-controller="Randevu" id="randevuForm" method="post">
+    <form id="randevuForm" asp-action="Tamamla" asp-controller="Randevu" method="post">
         <div class="row">
-            <div class="form-group .col-12 col-md-4">
+            <div class="form-group col-12 col-md-4">
                 <label for="selectedTime">Seçilen Saat:</label>
                 <input type="text" id="selectedTime" name="SelectedTime" class="form-control" readonly value="@ViewBag.SelectedTime" />
-            </div>
-
-
-            <div class="form-group col-12 col-md-4">
-                <label for="SelectedDoktor">Seçilen Doktor:</label>
-                <input type="text" id="SelectedDoktor" name="SelectedDoktor" class="form-control" readonly value="@((ViewBag.GetDoktor as SelectListItem)?.Text)" />
-            </div>
-
-            <div class="form-group col-12 col-md-4">
-                <label for="SelectedTarih">Seçilen Tarih:</label>
-                <input type="text" id="SelectedTarih" name="SelectedTarih" class="form-control" readonly value="@ViewBag.GetTarih" />
+                <input type="hidden" name="SelectedTime" value="00:00" />
             </div>
         </div>
+
+        <input type="hidden" id="SelectedTarih" name="SelectedTarih" class="form-control" readonly value="@ViewBag.GetTarih" />
+        <input type="hidden" id="SelectedDoktor" name="SelectedDoktor" class="form-control" readonly value="@((ViewBag.GetDoktor as SelectListItem)?.Text)" />
+
         <div class="row justify-content-center align-items-center">
             <div class="col-12 col-md-4 mt-2 d-flex justify-content-center align-items-center">
-                <input type="submit" value="Oluştur" class="btn btn-primary" />
+                <!-- Butona tıklandığında formu gönderen JavaScript fonksiyonu -->
+                <button type="button" onclick="submitForm()" class="btn btn-primary">Bütün Değerleri Gönder</button>
             </div>
         </div>
     </form>
-
-    
-
-
+</div>
 
 @section scripts {
     <script>
@@ -64,20 +58,27 @@
             const randevuSaatleriDiv = document.getElementById("randevu-saatleri");
             const selectedTimeInput = document.getElementById("selectedTime");
 
-            // Sunucudan gelen randevuları işle
-            const randevular = @Html.Raw(Json.Serialize(Model));
+            const randevular = @Html.Raw(ViewBag.SerializedRandevular);
 
+            // Tıklama olayını ekle
             randevuSaatleriDiv.addEventListener("click", function (event) {
-                const clickedElement = event.target;
-                if (clickedElement.classList.contains("randevu-saati")) {
-                    const randevuSaat = clickedElement.innerText;
-                    selectedTimeInput.value = randevuSaat;
-                    alert(`Randevu saati seçildi: ${randevuSaat}`);
+                const clickedElement = event.target.closest('.randevu-saati');
+
+                if (clickedElement) {
+                    const randevuSaat = clickedElement.textContent.trim();
+                    const isRandevuDolu = clickedElement.classList.contains("randevu-dolu");
+
+                    if (!isRandevuDolu) {
+                        selectedTimeInput.value = randevuSaat;
+                        alert(`Randevu saati seçildi: ${randevuSaat}`);
+                    } else {
+                        alert(`Bu saat dolu, başka bir saat seçin.`);
+                    }
                 }
             });
 
             randevular.forEach(randevu => {
-                const randevuDiv = document.querySelector(`.randevu-saati[data-randevu-id="${randevu.RandevuId}"]`);
+                const randevuDiv = document.querySelector(`.randevu-saati[data-randevu-id="${randevu.randevuId}"]`);
 
                 if (randevuDiv) {
                     randevuDiv.classList.add("randevu-dolu");
@@ -87,57 +88,43 @@
     </script>
 }
 
+
+
 <style>
-.container {
-    margin-top: 50px; /* Navbar ile boşluk bırakmak için üst margini ayarlayın */
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+    .container {
+        margin-top: 50px; /* Navbar ile boşluk bırakmak için üst margini ayarlayın */
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
+    h1 {
+        text-align: center;
+        color: #333;
+    }
 
+    #randevu-saatleri {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
 
-h1 {
-    text-align: center;
-    color: #333;
-}
+    .randevu-saati {
+        width: calc(33.33% - 10px);
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
 
-#randevu-saatleri {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
+    .randevu-dolu {
+        background-color: #ff9999; /* Kırmızı arkaplan */
+    }
 
-.randevu-saati {
-    width: calc(33.33% - 10px);
-    margin-bottom: 10px;
-    padding: 10px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.randevu-dolu {
-    background-color: #ff9999; /* Kırmızı arkaplan */
-}
-
-.randevu-saati:hover {
-    background-color: #f0f0f0;
-}
-
+    .randevu-saati:hover {
+        background-color: #f0f0f0;
+    }
 </style>
-
-
-
-
-
-
-
-
-
-
-
-
-

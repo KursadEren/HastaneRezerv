@@ -6,6 +6,7 @@ using System;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 
 namespace HastaneRezerv.Controllers
 {
@@ -18,6 +19,7 @@ namespace HastaneRezerv.Controllers
 
         public LoginController(HastaneContext context, UserManager<RegisterModelcs> userManager, SignInManager<RegisterModelcs> signInManager)
         {
+
             k = context;
             _userManager = userManager;
             _signInManager = signInManager;
@@ -98,6 +100,11 @@ namespace HastaneRezerv.Controllers
                 {
                     var user = await _userManager.FindByNameAsync(kullanici.AdSoyad);
                     var Roles = await _userManager.GetRolesAsync(user);
+                    // Bu değeri kendi uygulamanıza göre almalısınız
+
+                    // HttpContext.Session üzerinde sakla
+
+                    HttpContext.Session.SetInt32("USERID", kullanici.KullaniciId);
 
                     // Giriş başarılıysa kullanıcı bilgilerini saklama
                     SetUserSession(model.AdSoyad);
