@@ -46,7 +46,7 @@
         <div class="row justify-content-center align-items-center">
             <div class="col-12 col-md-4 mt-2 d-flex justify-content-center align-items-center">
                 <!-- Butona tıklandığında formu gönderen JavaScript fonksiyonu -->
-                <button type="button" onclick="submitForm()" class="btn btn-primary">Bütün Değerleri Gönder</button>
+                <button type="submit"  class="btn btn-primary">Bütün Değerleri Gönder</button>
             </div>
         </div>
     </form>
@@ -58,7 +58,7 @@
             const randevuSaatleriDiv = document.getElementById("randevu-saatleri");
             const selectedTimeInput = document.getElementById("selectedTime");
 
-            const randevular = @Html.Raw(ViewBag.SerializedRandevular);
+           
 
             // Tıklama olayını ekle
             randevuSaatleriDiv.addEventListener("click", function (event) {
